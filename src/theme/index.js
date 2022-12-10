@@ -21,10 +21,14 @@ export const theme = {
         sm: Math.floor(width / 25), 
     },
     icons: {
-        sm: Math.floor(width / 18)
+        lg: Math.floor(width / 10),
+        md: Math.floor(width / 15),
+        sm: Math.floor(width / 18),
     },
     borderRadius: {
+        full: width,
+        lg: Math.floor(width / 8),
+        md: Math.floor(width / 22),
         sm: Math.floor(width / 60),
-        full: width
     }
 }

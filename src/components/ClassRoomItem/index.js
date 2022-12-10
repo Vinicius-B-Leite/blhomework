@@ -1,17 +1,39 @@
 import React from 'react';
-import { Avatar, Button, HStack, Text } from 'native-base'
-import { colors } from '../../theme/colors';
+
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { theme } from '../../theme';
 
 
 
 
 export default function ClassRoomItem({ item }) {
-    return (
-        <Button justifyContent='flex-start' bg={colors.blackBackgroundColor} borderRadius='lg' mt={5} p={3} _pressed={{backgroundColor: colors.backgrounbColor}} >
-            <HStack alignItems='center' space={3}>
-                <Avatar source={{ uri: item.avatarURL }} ml={3} size='10' />
-                <Text color={colors.white} numberOfLines={1}>{item.name}</Text>
-            </HStack>
-        </Button>
-    );
+
+    return(
+        <TouchableOpacity style={styles.container}>
+            <Image source={{uri: item.avatarURL}}  style={styles.avatar}/>
+            <Text numberOfLines={1} style={styles.classroomName}>{item.name}</Text>
+        </TouchableOpacity>
+    )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: theme.colors.blackBackgroundColor,
+        marginVertical: '2%',
+        height: Dimensions.get('screen').height / 14,
+        paddingHorizontal: '5%'
+    },
+    avatar:{
+        width: '12%', 
+        height: '70%',
+        borderRadius: theme.borderRadius.full
+    },
+    classroomName:{
+        color: theme.colors.white,
+        marginLeft: '5%',
+        fontSize: theme.font.sm
+    }
+})

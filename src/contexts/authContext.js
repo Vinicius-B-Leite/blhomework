@@ -64,7 +64,6 @@ export default function AuthContextProvider({ children }) {
             auth().signInWithEmailAndPassword(email, password)
                 .then((userCredencial) => {
                     setUser(auth().currentUser.toJSON())
-                    alert('FOI')
                 })
                 .catch(err => {
                     handleAuthError(err)

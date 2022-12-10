@@ -1,8 +1,7 @@
-import { Box, Button, KeyboardAvoidingView, Modal, Text } from 'native-base';
 import React, { useContext, useState } from 'react';
-import { colors } from '../../theme/colors';
-import Input from '../Input';
-import { ClassroomContext } from '../../contexts/classroomContext'
+import { Dimensions, Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ClassroomContext } from '../../contexts/classroomContext';
+import { theme } from '../../theme';
 
 
 
@@ -12,22 +11,72 @@ export default function ModalEnterClassroom({ modalVisible, onClose }) {
     const [classroomCode, setClassroomCode] = useState()
 
     return (
-        <Modal onClose={onClose} isOpen={modalVisible} size='full' bg={colors.backgrounbColorSecundary} overlayVisible={true} animationPreset='slide' justifyContent='center' alignItems='center' >
-                <Box p='5%' alignItems='center' borderTopRadius={40} borderTopLeftRadius={40} w='100%' h='40%' position='absolute' bottom={0} bg={colors.blackBackgroundColor}>
-                    <Text fontWeight='bold' fontSize={18} lineHeight={20} mt={5} color={colors.white}>Entrar em uma sala</Text>
+        <Modal animationType='slide' transparent visible={modalVisible} onRequestClose={onClose}>
 
-                    <Input
-                        placeholder='Digite o código da sala'
+
+            <View style={styles.container}>
+
+                <TouchableOpacity onPress={() => onClose()} style={styles.close}>
+                    <View />
+                </TouchableOpacity>
+
+                <View style={styles.main}>
+                    <Text style={styles.title}>Entrar em uma sala</Text>
+                    <TextInput
                         value={classroomCode}
-                        setValue={setClassroomCode}
-                        bg={colors.backgrounbColor}
+                        onChangeText={setClassroomCode}
+                        style={styles.inp}
+                        placeholder='Digite o código da sala'
+                        placeholderTextColor={theme.colors.grey}
                     />
-
-                    <Button onPress={() => enterInClassroom(classroomCode)} w='100%' bg={colors.contrast} mt={20} _text={{ color: colors.white }}>
-                        Enviar
-                    </Button>
-                </Box>
+                    <TouchableOpacity style={styles.btn} onPress={() => enterInClassroom(classroomCode)}>
+                        <Text style={styles.textBtn}>Entrar</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </Modal>
-
-    );
+    )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.colors.backgrounbColorSecundary
+    },
+    close: {
+        flex: 1
+    },
+    main: {
+        height: Dimensions.get('screen').height / 2.5,
+        backgroundColor: theme.colors.blackBackgroundColor,
+        borderTopLeftRadius: theme.borderRadius.lg,
+        borderTopRightRadius: theme.borderRadius.lg,
+        alignItems: 'center'
+    },
+    title: {
+        color: theme.colors.white,
+        fontSize: theme.font.md,
+        marginTop: '13%'
+    },
+    inp: {
+        backgroundColor: theme.colors.backgrounbColor,
+        width: '80%',
+        fontSize: theme.font.sm,
+        paddingLeft: '5%',
+        marginTop: '5%',
+        borderRadius: theme.borderRadius.sm,
+    },
+    btn: {
+        width: '80%',
+        backgroundColor: theme.colors.contrast,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: '2%',
+        borderRadius: theme.borderRadius.sm,
+        marginTop: '10%'
+    },
+    textBtn: {
+        fontSize: theme.font.sm,
+        color: theme.colors.white
+    }
+})

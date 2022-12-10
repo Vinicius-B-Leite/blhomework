@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import firestore from '@react-native-firebase/firestore'
 import storage from '@react-native-firebase/storage'
 import { AuthContext } from './authContext';
@@ -37,18 +37,19 @@ export default function ClassrommProvider({ children }) {
                 name: name
             }).then(documentReference => {
                 setClassroomID(newKey)
+                Keyboard.dismiss()
             }).finally(() => setLoadingCreateClassroom(false))
         }
     }
 
     async function getClassroom() {
-        let classroomList = []
         return firestore()
             .collection('classroom')
             .where('students', 'array-contains', user.uid)
             .onSnapshot(documentSnapshot => {
+                let classroomList = []
                 documentSnapshot?.docs?.forEach(doc => {
-                    classroomList.push(doc.data())
+                    classroomList.push({ ...doc.data(), id: doc.id })
                 })
                 setClassrooms(classroomList)
             })
@@ -63,15 +64,18 @@ export default function ClassrommProvider({ children }) {
             .doc(key)
             .get()
 
-        studentsList && await firestore()
-            .collection('classrooom')
-            .doc(key)
-            .update(
-                {
-                    students: studentsList.push(user.uid)
-                }
-            )
-        
+        studentsList.data().students.push(user.uid)
+        if (studentsList.exists) {
+            await firestore()
+                .collection('classroom')
+                .doc(key)
+                .update(
+                    {
+                        students: studentsList.data().students
+                    }
+                )
+
+        }
         setLoadingEnterClassroom(false)
     }
 
