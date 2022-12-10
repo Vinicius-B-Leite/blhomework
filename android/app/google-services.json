@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "543984104284",
+    "project_id": "bl-homework",
+    "storage_bucket": "bl-homework.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543984104284:android:2983e11cb8537fb2a54799",
+        "android_client_info": {
+          "package_name": "com.blhomework_versao_boa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543984104284-2lm3tjvi4k9cfat4hjrenrkfk4425pav.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQJp7smMmO_tfiJNCj3gNkWRY6d7Hul_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543984104284-2lm3tjvi4k9cfat4hjrenrkfk4425pav.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
