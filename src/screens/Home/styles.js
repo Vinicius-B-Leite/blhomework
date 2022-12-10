@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
         marginTop: '5%'
     },
     enterClassroom:{
-        fontSize: theme.font.md
+        fontSize: theme.font.md,
+        color: theme.colors.white
     },
     enterClassroomIcon:{
         position: 'absolute',

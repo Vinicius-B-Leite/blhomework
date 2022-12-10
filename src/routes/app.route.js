@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { theme } from '../theme';
+import HomeStack from './HomeStack';
 
 
 
@@ -25,8 +26,8 @@ export default function AppRoutes() {
             tabBarHideOnKeyboard: true,
         }} >
             <Tab.Screen
-                name='Home'
-                component={Home}
+                name='HomeStack'
+                component={HomeStack}
                 options={{
                     tabBarIcon: ({ focused }) => <Feather name='home' size={theme.icons.md} color={focused ? theme.colors.contrast : theme.colors.disableContrast} />,
                 }} />

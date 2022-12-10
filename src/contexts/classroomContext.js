@@ -8,7 +8,7 @@ export const ClassroomContext = createContext()
 
 export default function ClassrommProvider({ children }) {
 
-    const { user } = useContext(AuthContext)
+    const { user, setIsOwner } = useContext(AuthContext)
 
     const [classroomID, setClassroomID] = useState()
     const [classrooms, setClassrooms] = useState([])
@@ -47,8 +47,12 @@ export default function ClassrommProvider({ children }) {
             .collection('classroom')
             .where('students', 'array-contains', user.uid)
             .onSnapshot(documentSnapshot => {
+
                 let classroomList = []
+
                 documentSnapshot?.docs?.forEach(doc => {
+                   
+                    
                     classroomList.push({ ...doc.data(), id: doc.id })
                 })
                 setClassrooms(classroomList)

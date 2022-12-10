@@ -7,6 +7,7 @@ export const AuthContext = createContext()
 export default function AuthContextProvider({ children }) {
     const [error, setError] = useState({})
     const [user, setUser] = useState(auth()?.currentUser?.toJSON())
+    const [isOwner, setIsOwner] = useState(false)
 
     function handleAuthError(err) {
         if (err.code == 'auth/invalid-email') setError({
@@ -72,7 +73,7 @@ export default function AuthContextProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ signUp, error, setError, login, user }}>
+        <AuthContext.Provider value={{ signUp, error, setError, login, user, setIsOwner, isOwner }}>
             {children}
         </AuthContext.Provider>
     );

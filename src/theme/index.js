@@ -17,6 +17,7 @@ export const theme = {
     },
     font: {
         lg: Math.floor(width / 9),
+        xmd: Math.floor(width / 12), 
         md: Math.floor(width / 19), 
         sm: Math.floor(width / 25), 
     },

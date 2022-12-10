@@ -6,6 +6,7 @@ import DocumentPicker from 'react-native-document-picker'
 import { ClassroomContext } from '../../contexts/classroomContext';
 import { theme } from '../../theme';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { pickImage } from '../../utils/pickImage';
 
 
 
@@ -16,15 +17,7 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
     const [classRoomPhoto, setClassRoomPhoto] = useState('')
 
 
-    async function pickImage() {
-        DocumentPicker.pick({
-            allowMultiSelection: false,
-            type: 'image/*',
-            copyTo: 'documentDirectory'
-        }).then(data => {
-            setClassRoomPhoto(data[0])
-        })
-    }
+   
 
     return (
         <Modal animationType='slide' transparent visible={modalVisible} onRequestClose={onClose}>
@@ -32,7 +25,7 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
 
             <View style={styles.container}>
                 <View style={styles.main}>
-                    <TouchableOpacity style={styles.pickImage} onPress={pickImage}>
+                    <TouchableOpacity style={styles.pickImage} onPress={() => pickImage(setClassRoomPhoto)}>
                         {
                             classRoomPhoto ?
                                 (
