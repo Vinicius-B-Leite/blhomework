@@ -15,7 +15,6 @@ export default function ClassrommProvider({ children }) {
     const [loading, setLoading] = useState(false)
 
 
-
     async function sendImageToStorage(newKey, file) {
         const ref = storage().ref(`files/${newKey}/avatar`)
         await ref.putFile(file)
@@ -23,7 +22,7 @@ export default function ClassrommProvider({ children }) {
         return await ref.getDownloadURL()
     }
 
-    async function createClassRoom({photo, name, callback}) {
+    async function createClassRoom({ photo, name, callback }) {
 
         if (photo && name != '') {
             setLoading(true)
@@ -38,7 +37,7 @@ export default function ClassrommProvider({ children }) {
             }).then(documentReference => {
                 setClassroomID(newKey)
                 Keyboard.dismiss()
-                if (callback){
+                if (callback) {
                     callback(documentReference)
                 }
             }).finally(() => setLoading(false))
@@ -66,18 +65,21 @@ export default function ClassrommProvider({ children }) {
 
     }
 
-   
 
-    async function enterInClassroom(key, onFinished) {
+
+    async function enterInClassroom(key, onFinished, setError) {
         setLoading(true)
+
+        if (key === '') return
 
         let studentsList = await firestore()
             .collection('classroom')
             .doc(key)
             .get()
 
-        studentsList.data().students.push(user.uid)
         if (studentsList.exists) {
+            studentsList.data().students.push(user.uid)
+
             await firestore()
                 .collection('classroom')
                 .doc(key)
@@ -87,10 +89,16 @@ export default function ClassrommProvider({ children }) {
                     }
                 )
 
+            if (onFinished) {
+                onFinished()
+            }
+
+        } else {
+            if (setError) {
+                setError()
+            }
         }
-        if (onFinished){
-            onFinished()
-        }
+
         setLoading(false)
     }
 
@@ -101,7 +109,7 @@ export default function ClassrommProvider({ children }) {
             classrooms,
             getClassroom,
             loading,
-            enterInClassroom
+            enterInClassroom,
         }}>
             {children}
         </ClassroomContext.Provider>

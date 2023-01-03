@@ -65,8 +65,8 @@ export default function FilesItem({ item, porcentage, index }) {
             </S.Left>
 
             <S.Right>
-                <Svg width='100%' height='55%'>
-                    <G rotation='-90' origin={`${radius + 9}, ${radius + 2}`}>
+                <Svg width='100%' height='60%'>
+                    <G rotation='-90' origin={`${radius + 11}, ${radius + 4}`}>
                         <Circle
                             cx='50%'
                             cy='50%'

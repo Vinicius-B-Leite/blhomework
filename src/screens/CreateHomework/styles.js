@@ -4,7 +4,7 @@ import { Modalize } from "react-native-modalize";
 
 export const Container = styled.SafeAreaView`
         flex: 1;
-        background-Color: ${({ theme }) => theme.colors.backgrounbColor}  ;
+        background-Color: ${({ theme }) => theme.colors.backgrounbColor};
         `
 export const Header = styled.View`
         flex-Direction: row;

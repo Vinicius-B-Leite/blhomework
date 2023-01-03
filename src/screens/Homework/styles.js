@@ -1,3 +1,4 @@
+import { Dimensions } from "react-native";
 import styled from "styled-components";
 
 
@@ -30,7 +31,7 @@ export const Title = styled.Text`
         padding-bottom: 1%;
 `
 export const Desciption = styled.ScrollView`
-        max-height: ${() => Dimensions.get(screen).height / 1.5};
+        max-height: ${() => Dimensions.get('screen').height / 1.5}px;
         margin-top: 5%;
 `
 export const SimpleText = styled.Text`

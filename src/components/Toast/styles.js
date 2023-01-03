@@ -11,11 +11,6 @@ export const Container = styled.View`
         width: 100%;
 `;
 
-export const Toast = styled(Animated.View)`
-        padding: 0.5%  2%;
-        opacity: ${({opacity}) => opacity};
-        background-color: ${({backgroundColor}) => backgroundColor || '#77dd77'};
-`
 export const Message = styled.Text`
         color: ${({ theme }) => theme.colors.white};
         font-size: ${({ theme }) => theme.font.sm}px;

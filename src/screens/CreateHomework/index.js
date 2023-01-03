@@ -63,7 +63,7 @@ export default function CreateHomework({ navigation, route }) {
 
                 <S.Main>
                     <S.SelectSubject onPress={() => setModalSubjectsVisible(true)}>
-                        <S.InactiveOrActiveText  active={!!subjectSelected} color={subjectSelected?.color}>{subjectSelected ? subjectSelected.name : 'Disciplina'}</S.InactiveOrActiveText>
+                        <S.InactiveOrActiveText active={!!subjectSelected} color={subjectSelected?.color}>{subjectSelected ? subjectSelected.name : 'Disciplina'}</S.InactiveOrActiveText>
                         <AntDesign name='down' size={theme.icons.sm} color={theme.colors.white} />
                     </S.SelectSubject>
 
@@ -87,7 +87,7 @@ export default function CreateHomework({ navigation, route }) {
 
                     <S.UploadAndDateContainer  >
                         <View>
-                            <S.UploadIcon  onPress={openModalize}>
+                            <S.UploadIcon onPress={openModalize}>
                                 <AntDesign name='clouduploado' size={theme.icons.md} color={theme.colors.white} style={{ marginRight: '2%' }} />
                                 <Text>Material de apoio</Text>
                             </S.UploadIcon>
@@ -108,11 +108,18 @@ export default function CreateHomework({ navigation, route }) {
 
             <ModalSubjects visible={modalSubjectsVisible} onClose={() => setModalSubjectsVisible(false)} />
             <S.Modal
+                modalStyle={{
+                    backgroundColor: theme.colors.backgrounbColor,
+                    borderTopLeftRadius: theme.borderRadius.lg,
+                    borderTopRightRadius:  theme.borderRadius.lg,
+                    padding: '5%'
+                }}
                 ref={modalizeRef}
                 snapPoint={Dimensions.get('screen').height / 1.5}
+                HeaderComponent={() => <BSModalUploadFiles id={route.params.id} />}
                 flatListProps={{
                     data: filesOnUploading,
-                    ListHeaderComponent: <BSModalUploadFiles id={route.params.id} />,
+                    showsVerticalScrollIndicator: false,
                     renderItem: ({ item, index }) => <FilesItem item={item} porcentage={item.porcentage} index={index} />,
                 }}
             />

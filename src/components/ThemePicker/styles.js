@@ -9,7 +9,7 @@ export const Container = styled.View`
         position: absolute;
         top: 50%;
         left: 10%;
-        height: ${Dimensions.get('screen').height / 7};
+        height: ${Dimensions.get('screen').height / 7}px;
         width: 80%;
         background-color: ${({ theme }) => theme.colors.blackBackgroundColor};
         border-radius: ${({ theme }) => theme.borderRadius.sm}px;
@@ -28,8 +28,8 @@ export const CloseBtn = styled.TouchableOpacity`
         position: absolute;
         top: 0;
         left: 0;
-        width: ${Dimensions.get('screen').width};
-        height: ${Dimensions.get('screen').height};
+        width: ${Dimensions.get('screen').width}px;
+        height: ${Dimensions.get('screen').height}px;
         z-index: -1;
         background-color: ${({ theme }) => theme.colors.backgrounbColorSecundary};
 `

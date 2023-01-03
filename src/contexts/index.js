@@ -12,11 +12,11 @@ export default function Contexts({ children }) {
             <AuthContextProvider>
                 <ClassrommProvider>
                     <HomeworkProvider>
-                        <ChatContextProvider>
-                            <NotificationProvider>
+                        <NotificationProvider>
+                            <ChatContextProvider>
                                 {children}
-                            </NotificationProvider>
-                        </ChatContextProvider>
+                            </ChatContextProvider>
+                        </NotificationProvider>
                     </HomeworkProvider>
                 </ClassrommProvider>
             </AuthContextProvider>

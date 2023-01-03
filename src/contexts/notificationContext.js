@@ -26,7 +26,7 @@ export default function NotificationProvider({ children }) {
         console.log(`tokenAsyncStorage:  ${tokenFCM}\ntokenFCM: ${tokenFCM}`)
     }
 
-    async function sendNotification(title, body, tokens) {
+    async function sendNotification({title, body, tokens}) {
         await axios.post('https://apiblhomework.onrender.com/notification', {
             title, body, tokens
         })

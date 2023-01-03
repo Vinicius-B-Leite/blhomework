@@ -12,7 +12,7 @@ export const Avatar = styled.Image`
         width: 12%;
         height: 100%;
         border-radius: ${({ theme }) => theme.borderRadius.full}px; 
-        border-width: .1;
+        border-width: .1px;
         border-color: ${({ theme }) => theme.colors.grey} ;
         resizeMode: cover;
 `;

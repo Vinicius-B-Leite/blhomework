@@ -28,18 +28,16 @@ export default function ChatRoom({ route, navigation }) {
     useFocusEffect(
         useCallback(() => {
             getMessages(id)
+            navigation.addListener('beforeRemove', () => {
+                tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
+            })
         }, [])
     )
 
 
-    function handleGoBack() {
-        tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
-        navigation.goBack()
-    }
-
     return (
         <S.Container>
-            <S.Header onPress={handleGoBack}>
+            <S.Header onPress={() =>  navigation.goBack()}>
                 <AntDesign name='arrowleft' size={theme.icons.sm} color={theme.colors.white} />
                 <S.Avatar
                     source={{ uri: avatarURL }}
@@ -66,13 +64,13 @@ export default function ChatRoom({ route, navigation }) {
                 <S.Input
                     value={message}
                     onChangeText={setMessage}
-                    
+
                     placeholder='Digite algo'
                     placeholderTextColor={theme.colors.grey}
                 />
 
                 <S.ButtonImage
-                    
+
                     onPress={() => pickDocument({
                         setState: setImageUri,
                         type: 'image/*',
@@ -83,7 +81,7 @@ export default function ChatRoom({ route, navigation }) {
                 </S.ButtonImage>
 
                 <S.ButtonSendMessage
-                    
+
                     onPress={() => {
                         setMessage('')
                         sendMessage({ message: message, classroomId: id })

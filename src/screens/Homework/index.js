@@ -3,8 +3,9 @@ import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import { HomeworkContext } from '../../contexts/homeworkContext';
 import Divisor from '../../components/Divisor'
 import { FlatList } from 'react-native-gesture-handler';
-import { useTheme } from '@react-navigation/native';
 import * as S from './styles'
+import { useTheme } from 'styled-components';
+import ViewFileItem from '../../components/ViewFileItem';
 
 
 
@@ -54,8 +55,7 @@ export default function Homework({ route, navigation }) {
                                 <FlatList
                                     showsVerticalScrollIndicator={false}
                                     data={files}
-                                    renderItem={({ item }) => <S.FilesContainerFileItem item={item} />}
-
+                                    renderItem={({ item }) => <ViewFileItem item={item} />}
                                 />
                             </S.FilesContainer>
                         )

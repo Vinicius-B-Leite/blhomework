@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
         width: 100%;
-        height: ${() => Dimensions.get('screen').height / 12};
+        height: ${() => Dimensions.get('screen').height / 12}px;
         background-color: ${({ theme }) => theme.colors.blackBackgroundColor} ;
         flex-direction: row;
         align-items: center;
@@ -25,11 +25,11 @@ export const FileExtensionContainer = styled.View`
         text-align: center;
         background-color: ${({ extFile, theme }) => (extFile === 'pdf' | extFile === 'docx') ? theme.colors.darkYellow : theme.colors.darkGreen};
 `;
-export const FileEXT = styled.View`
+export const FileEXT = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
         color: ${({theme, extFile}) => (extFile === 'pdf' || extFile === 'docx') ? theme.colors.yellow : theme.colors.green};
 `;
-export const Info = styled.View`
+export const Info = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
         color:  ${({ theme }) => theme.colors.white};
         width: 100%;
@@ -42,7 +42,7 @@ export const Right = styled.View`
         justify-content: center;
         position: relative;
 `;
-export const XIcon = styled.View`
+export const XIcon = styled.TouchableOpacity`
         position: absolute;
         top: 32%;
         left: 29%;

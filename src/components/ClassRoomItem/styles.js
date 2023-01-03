@@ -7,7 +7,7 @@ export const Container = styled.TouchableOpacity`
         width: 100%;
         background-color: ${({theme}) => theme.colors.blackBackgroundColor} ;
         margin: 2% 0;
-        height: ${() => Dimensions.get('screen').height / 14} ;
+        height: ${() => Dimensions.get('screen').height / 14}px ;
         padding: 0 5%;
 `;
 export const Avatar = styled.Image`

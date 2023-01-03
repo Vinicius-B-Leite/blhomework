@@ -8,7 +8,7 @@ export const Close = styled.TouchableOpacity`
         flex: 1;
 `
 export const Main = styled.View`
-        height: ${({ theme }) => Dimensions.get('screen').height / 2};
+        height: ${({ theme }) => Dimensions.get('screen').height / 2}px;
         background-color: ${({ theme }) => theme.colors.blackBackgroundColor};
         border-top-left-radius: ${({ theme }) => theme.borderRadius.lg}px;
         border-top-right-radius: ${({ theme }) => theme.borderRadius.lg}px;

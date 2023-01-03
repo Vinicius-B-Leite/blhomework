@@ -13,14 +13,14 @@ export const CloseBtn = styled.TouchableOpacity `
         position: absolute;
         top: 0;
         left: 0;
-        width: ${() => Dimensions.get('screen').width};
-        height: ${() => Dimensions.get('screen').height};
+        width: ${() => Dimensions.get('screen').width}px;
+        height: ${() => Dimensions.get('screen').height}px;
         z-index: -1;
 `
 export const Main = styled.View`
         background-color: ${({theme}) => theme.colors.blackBackgroundColor};
         width: 100%;
-        height: ${ Dimensions.get('screen').height / 1.5};
+        height: ${ Dimensions.get('screen').height / 1.5}px;
         align-items: center;
         border-radius: ${({theme}) => theme.borderRadius.md}px;
 `
@@ -30,7 +30,7 @@ export const PickDocument = styled.TouchableOpacity`
         border-radius: ${({theme}) => theme.borderRadius.full}px;
         justify-content: center;
         align-items: center;
-        border-width: 1;
+        border-width: 1px;
         border-color: ${({theme}) => theme.colors.white};
         margin-top: 10%;
 `

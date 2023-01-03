@@ -17,8 +17,8 @@ export const Header = styled.TouchableOpacity`
 `
 export const Avatar = styled.Image`
         border-radius: ${({ theme }) => theme.borderRadius.full}px;
-        width: 10%;
-        height: 100%;
+        width: ${Dimensions.get('screen').width / 10}px;
+        height: ${Dimensions.get('screen').width / 11}px;
         margin: 0 2%;
 `
 export const Title = styled.Text`

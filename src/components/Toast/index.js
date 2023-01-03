@@ -35,9 +35,11 @@ export default function Toast({ text, bg, visible, onAnimatedFinished, duration 
 
     return (
         <S.Container>
-            <S.Toast opacity={opacity} backgroundColor={bg} >
+            <Animated.View style={{
+                paddingVertical: '0.5%', paddingHorizontal: '2%', opacity, backgroundColor: bg || '#77dd77'}}>
                 <S.Message numberOfLines={1} >{text}</S.Message>
-            </S.Toast>
+            </Animated.View>
+
         </S.Container>
     );
 }

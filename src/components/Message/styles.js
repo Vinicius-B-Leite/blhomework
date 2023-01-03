@@ -16,7 +16,7 @@ export const UserName = styled.Text`
 `
 export const UserPhoto = styled.Image`
         width: 9%;
-        height: ${({ theme }) => theme.icons.xmd};
+        height: ${({ theme }) => theme.icons.xmd}px;
         border-radius: ${({ theme }) => theme.borderRadius.full}px;
         margin-right: 3%;
 `

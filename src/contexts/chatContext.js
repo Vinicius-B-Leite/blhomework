@@ -6,13 +6,14 @@ import groupBy from 'lodash.groupby';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { NotifcationContext } from './notificationContext'
 
 export const ChatContext = createContext()
 
 export default function ChatContextProvider({ children }) {
 
     const { user } = useContext(AuthContext)
+    const { getTokensOfStudents, sendNotification } = useContext(NotifcationContext)
     const [chats, setChats] = useState([])
     const [messages, setMessages] = useState([])
 
@@ -80,7 +81,11 @@ export default function ChatContextProvider({ children }) {
     }
 
     async function getNumberOfMessagesUnread(chatId) {
-        const lastMessageRead = new Date(await getLastMessageRead(chatId))
+        const asyncstorageLastMessage = await getLastMessageRead(chatId)
+
+        if (!asyncstorageLastMessage) return
+
+        const lastMessageRead = new Date(asyncstorageLastMessage)
 
         const docs = await firestore()
             .collection('classroom')
@@ -95,7 +100,7 @@ export default function ChatContextProvider({ children }) {
         return docs.size
 
     }
-    
+
     async function getMessages(classroomID) {
         const ref = firestore()
             .collection('classroom')
@@ -123,6 +128,7 @@ export default function ChatContextProvider({ children }) {
     }
 
     async function sendMessage({ message, image, classroomId }) {
+        
         if (message === '' && !image) return
 
 
@@ -145,6 +151,12 @@ export default function ChatContextProvider({ children }) {
         }
         await lastMessageRef.set({
             lastMessage: data.message || 'photo',
+        })
+
+        await sendNotification({
+            tokens: (await getTokensOfStudents(classroomId)).filter(tok=>tok!==user.uid),
+            title: (await firestore().collection('classroom').doc(classroomId).get()).data().name,
+            body: data.message !== '' ? data.message : 'imagem'
         })
 
         await messageCollectionRef.add(data)
