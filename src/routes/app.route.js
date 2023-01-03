@@ -1,26 +1,26 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import Home from '../screens/Home'
-import Chat from '../screens/Chat'
+import ChatStackRotutes from './ChatStack'
 import Profile from '../screens/Profile'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { theme } from '../theme';
 import HomeStack from './HomeStack';
-
+import { useTheme } from 'styled-components';
+import NotificationProvider, { NotifcationContext } from '../contexts/notificationContext';
 
 
 const Tab = createBottomTabNavigator()
 
 export default function AppRoutes() {
+    const theme = useTheme()
     return (
-        <Tab.Navigator  screenOptions={{
+        <Tab.Navigator screenOptions={{
             headerShown: false,
             tabBarStyle: {
                 backgroundColor: theme.colors.blackBackgroundColor,
                 height: '8%',
-                borderTopWidth: 0
+                borderTopWidth: 0,
             },
             tabBarShowLabel: false,
             tabBarHideOnKeyboard: true,
@@ -32,8 +32,8 @@ export default function AppRoutes() {
                     tabBarIcon: ({ focused }) => <Feather name='home' size={theme.icons.md} color={focused ? theme.colors.contrast : theme.colors.disableContrast} />,
                 }} />
             <Tab.Screen
-                name='Chat'
-                component={Chat}
+                name='ChatStack'
+                component={ChatStackRotutes}
                 options={{
                     tabBarIcon: ({ focused }) => <Ionicons name='chatbox' size={theme.icons.md} color={focused ? theme.colors.contrast : theme.colors.disableContrast} />,
                 }} />

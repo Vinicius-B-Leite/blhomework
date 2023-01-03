@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Keyboard, View } from 'react-native';
+import { Keyboard } from 'react-native';
 import firestore from '@react-native-firebase/firestore'
 import storage from '@react-native-firebase/storage'
 import { AuthContext } from './authContext';
@@ -12,8 +12,8 @@ export default function ClassrommProvider({ children }) {
 
     const [classroomID, setClassroomID] = useState()
     const [classrooms, setClassrooms] = useState([])
-    const [loadingCreateClassroom, setLoadingCreateClassroom] = useState(false)
-    const [loadingEnterClassroom, setLoadingEnterClassroom] = useState(false)
+    const [loading, setLoading] = useState(false)
+
 
 
     async function sendImageToStorage(newKey, file) {
@@ -23,10 +23,10 @@ export default function ClassrommProvider({ children }) {
         return await ref.getDownloadURL()
     }
 
-    async function createClassRoom(photo, name) {
+    async function createClassRoom({photo, name, callback}) {
 
         if (photo && name != '') {
-            setLoadingCreateClassroom(true)
+            setLoading(true)
             let newKey = await firestore().collection('classroom').doc().id
             let avatarURL = await sendImageToStorage(newKey, photo)
 
@@ -38,11 +38,15 @@ export default function ClassrommProvider({ children }) {
             }).then(documentReference => {
                 setClassroomID(newKey)
                 Keyboard.dismiss()
-            }).finally(() => setLoadingCreateClassroom(false))
+                if (callback){
+                    callback(documentReference)
+                }
+            }).finally(() => setLoading(false))
         }
     }
 
     async function getClassroom() {
+        setLoading(true)
         return firestore()
             .collection('classroom')
             .where('students', 'array-contains', user.uid)
@@ -51,17 +55,21 @@ export default function ClassrommProvider({ children }) {
                 let classroomList = []
 
                 documentSnapshot?.docs?.forEach(doc => {
-                   
-                    
+
+
                     classroomList.push({ ...doc.data(), id: doc.id })
                 })
                 setClassrooms(classroomList)
+
+                setLoading(false)
             })
 
     }
 
-    async function enterInClassroom(key) {
-        setLoadingEnterClassroom(true)
+   
+
+    async function enterInClassroom(key, onFinished) {
+        setLoading(true)
 
         let studentsList = await firestore()
             .collection('classroom')
@@ -80,7 +88,10 @@ export default function ClassrommProvider({ children }) {
                 )
 
         }
-        setLoadingEnterClassroom(false)
+        if (onFinished){
+            onFinished()
+        }
+        setLoading(false)
     }
 
     return (
@@ -89,7 +100,7 @@ export default function ClassrommProvider({ children }) {
             classroomID,
             classrooms,
             getClassroom,
-            loadingCreateClassroom,
+            loading,
             enterInClassroom
         }}>
             {children}

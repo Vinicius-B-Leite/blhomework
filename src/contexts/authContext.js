@@ -1,5 +1,10 @@
 import React, { createContext, useState } from 'react';
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+import storage from '@react-native-firebase/storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 
 export const AuthContext = createContext()
@@ -10,22 +15,28 @@ export default function AuthContextProvider({ children }) {
     const [isOwner, setIsOwner] = useState(false)
 
     function handleAuthError(err) {
+
         if (err.code == 'auth/invalid-email') setError({
             email: {
                 message: 'Email inválido'
             }
         })
-        else if (err.code == 'auth/weak-password') setError({
+        if (err.code == 'auth/weak-password') setError({
             password: {
                 message: 'Senha fraca'
             }
         })
-        else if (err.code == 'auth/email-already-in-use') setError({
+        if (err.code == 'auth/email-already-in-use' || err.code == 'auth/account-exists-with-different-credential' || err.code == 'auth/credential-already-in-use') setError({
             email: {
                 message: 'Este email já está em uso'
             }
         })
-        else if (err.code == 'auth/wrong-password') setError({
+        if (err.code == 'auth/user-not-found' || err.code == 'auth/null-user') setError({
+            email: {
+                message: 'Usuário não encontrado'
+            }
+        })
+        if (err.code == 'auth/wrong-password') setError({
             email: {
                 message: 'Email ou senha errada'
             },
@@ -33,26 +44,57 @@ export default function AuthContextProvider({ children }) {
                 message: 'Email ou senha errada'
             }
         })
-        console.log(err.code)
+        console.log(error)
     }
 
     function signUp(email, password, userName) {
 
-        if (userName.length <= 2) setError({
+        if (email === '') {
+            setError({
+                email: {
+                    message: 'Informe um email'
+                }
+            })
+        }
+
+        else if (password === '') {
+            setError({
+                password: {
+                    message: 'Informe uma senha'
+                }
+            })
+        }
+
+        else if (userName === '') setError({
             userName: {
-                message: 'Nome muito pequeno'
+                message: 'Informe um nome'
             }
         })
 
-        else if (email !== '' && password == confirmPassword && userName !== '') {
+
+
+        else if (email !== '' && password !== '' && userName !== '') {
             auth()
                 .createUserWithEmailAndPassword(email, password)
-                .then((userCredencial) => {
-                    userCredencial.user.updateProfile({
+                .then(async (userCredencial) => {
+
+                    await userCredencial.user.updateProfile({
                         displayName: userName,
                         photoURL: 'https://img.freepik.com/vetores-gratis/avatar-de-personagem-de-empresario-isolado_24877-60111.jpg?w=740&t=st=1670249318~exp=1670249918~hmac=bfd9f0c087b6b128ec415b6e204314f5c8a30b6e842ca967ed15aca502c6d1a3'
                     })
+
                     setUser(auth().currentUser.toJSON())
+
+                    await firestore()
+                        .collection('users')
+                        .doc(userCredencial.user.uid)
+                        .set({
+                            displayName: userName,
+                            photoURL: 'https://img.freepik.com/vetores-gratis/avatar-de-personagem-de-empresario-isolado_24877-60111.jpg?w=740&t=st=1670249318~exp=1670249918~hmac=bfd9f0c087b6b128ec415b6e204314f5c8a30b6e842ca967ed15aca502c6d1a3',
+                            tokenFCM: ''
+                        })
+                    AsyncStorage.setItem('_userPassword', password)
+
                 })
                 .catch(err => {
                     handleAuthError(err)
@@ -61,19 +103,97 @@ export default function AuthContextProvider({ children }) {
     }
 
     function login(email, password) {
+
         if (email !== '' && password !== '') {
             auth().signInWithEmailAndPassword(email, password)
                 .then((userCredencial) => {
-                    setUser(auth().currentUser.toJSON())
+                    setUser({ ...auth().currentUser.toJSON() })
+                    AsyncStorage.setItem('_userPassword', password)
                 })
                 .catch(err => {
                     handleAuthError(err)
                 })
+        } else {
+            if (email === '') {
+                setError({
+                    email: {
+                        message: 'Informe um email'
+                    }
+                })
+            }
+
+            else if (password === '') {
+                setError({
+                    password: {
+                        message: 'Informe uma senha'
+                    }
+                })
+            }
+
         }
     }
 
+    function logout() {
+        auth().signOut().then(() => {
+            setUser(null)
+        })
+    }
+
+    async function changeUserPhoto(file) {
+        const ref = storage().ref(`users/${user.uid}`)
+        await ref.putFile(file.fileCopyUri)
+
+        const downloadUrl = await ref.getDownloadURL()
+        await firestore().collection('users').doc(user.uid).update({ photoURL: downloadUrl })
+        await auth().currentUser.updateProfile({ photoURL: downloadUrl })
+    }
+
+    async function changeUserName(newName) {
+        if (newName !== '') {
+            await auth().currentUser.updateProfile({ displayName: newName })
+            setUser(auth().currentUser.toJSON())
+            await firestore().collection('users').doc(user.uid).update({ displayName: newName })
+        }
+    }
+
+    async function changeEmail(newEmail) {
+        if (newEmail !== '') {
+            await reauthenticate()
+            await auth().currentUser.updateEmail(newEmail)
+            setUser((oldUser) => ({ ...oldUser, email: newEmail }))
+        }
+    }
+
+    async function changePassword(newPassword) {
+        if (newPassword !== '') {
+            await reauthenticate()
+            await auth().currentUser.updatePassword(newPassword)
+            setUser((oldUser) => ({ ...oldUser}))
+            await AsyncStorage.setItem('_userPassword', newPassword)
+        }
+    }
+    async function reauthenticate() {
+        const password = await AsyncStorage.getItem('_userPassword')
+        var cred = auth.EmailAuthProvider.credential(
+            user.email, password);
+        return auth().currentUser.reauthenticateWithCredential(cred)
+    }
+
     return (
-        <AuthContext.Provider value={{ signUp, error, setError, login, user, setIsOwner, isOwner }}>
+        <AuthContext.Provider value={{
+            signUp,
+            error,
+            setError,
+            login,
+            user,
+            setIsOwner,
+            isOwner,
+            logout,
+            changeUserPhoto,
+            changeUserName,
+            changeEmail,
+            changePassword
+        }}>
             {children}
         </AuthContext.Provider>
     );

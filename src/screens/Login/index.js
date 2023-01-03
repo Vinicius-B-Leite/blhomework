@@ -1,19 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useMemo, useState } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Entypo from 'react-native-vector-icons/Entypo'
-
-import { theme } from '../../theme';
-import { styles } from './styles';
+import * as S from './styles'
 import { AuthContext } from '../../contexts/authContext'
 import Toast from '../../components/Toast';
+import { useTheme } from 'styled-components';
 
 
 export default function Login() {
-
-    const [type, setType] = useState('singup')
+    const theme = useTheme()
+    const [type, setType] = useState('login')
     const { login, signUp, error, setError } = useContext(AuthContext)
 
     const [name, setName] = useState('')
@@ -22,77 +21,86 @@ export default function Login() {
 
     const [showPassword, setShowPassword] = useState(false)
 
+    const [toastVisible, setToastVisible] = useState(false)
+
+    useMemo(() => {
+        setToastVisible(Object.values(error).length > 0)
+    }, [error])
     return (
-        <SafeAreaView style={styles.container}>
-            {(error.email || error.password || error.userName) && <Toast text={error?.email?.message || error?.password?.message || error?.userName.message} bg={theme.colors.red} />}
-            <View style={styles.titleContainer}>
-                <Text style={[styles.Title, styles.titleContrast]}>BL</Text>
-                <Text style={styles.Title}>Homework</Text>
-            </View>
+        <S.Container >
+            <Toast text={
+                error?.email?.message ||
+                error?.password?.message ||
+                error?.userName?.message
+            }
+                bg={theme.colors.red}
+                visible={toastVisible}
+                onAnimatedFinished={() => setToastVisible(false)}
+            />
+            <S.TitleContainer >
+                <S.Title color={theme.colors.contrast}>BL</S.Title>
+                <S.Title >Homeworks</S.Title>
+            </S.TitleContainer>
 
             {
                 type === 'singup' && (
-                    <View style={[styles.inputContainer, error.userName && { borderWidth: 1, borderColor: theme.colors.red }]}>
+                    <S.InputContainer error={error?.userName}>
                         <FontAwesome5 name='user' size={theme.icons.sm} colors={theme.colors.white} />
-                        <TextInput
-                            style={styles.input}
+                        <S.Input
+                            value={name}
+                            onChangeText={setName}
                             placeholder='Nome'
                             placeholderTextColor={theme.colors.grey}
                         />
-                    </View>
+                    </S.InputContainer>
                 )
             }
 
-            <View style={[styles.inputContainer, error.email && { borderWidth: 1, borderColor: theme.colors.red }]}>
+            <S.InputContainer error={error?.email}>
                 <MaterialCommunityIcons name='email' size={theme.icons.sm} colors={theme.colors.white} />
-                <TextInput
+                <S.Input
                     value={email}
                     onChangeText={setEmail}
-                    style={styles.input}
                     placeholder='Email'
                     placeholderTextColor={theme.colors.grey}
                     autoCapitalize={false}
                     keyboardType='email-address'
                 />
-            </View>
+            </S.InputContainer>
 
-            <View style={[styles.inputContainer, error.password && { borderWidth: 1, borderColor: theme.colors.red }]}>
+            <S.InputContainer error={error.password}>
                 <FontAwesome name='lock' size={theme.icons.sm} colors={theme.colors.white} />
-                <TextInput
+                <S.Input
                     value={password}
                     onChangeText={setPassword}
-                    style={styles.input}
                     placeholder='Senha'
                     placeholderTextColor={theme.colors.grey}
-                    secureTextEntry={showPassword}
+                    secureTextEntry={!showPassword}
                 />
-                <TouchableOpacity style={styles.btnShowPassword} onPress={() => setShowPassword(!showPassword)}>
+                <S.BtnShowPassword onPress={() => setShowPassword(!showPassword)}>
                     {showPassword ? (
                         <Entypo name='eye' size={theme.icons.sm} colors={theme.colors.white} />
-                        ) :
+                    ) :
                         (
                             <Entypo name='eye-with-line' size={theme.icons.sm} colors={theme.colors.white} />
                         )}
 
 
-                </TouchableOpacity>
-            </View>
-            {
-                type === 'singup' && (
-                    <View style={styles.inputContainer}>
-                        <FontAwesome name='lock' size={theme.icons.sm} colors={theme.colors.white} />
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Confirme a senha'
-                            placeholderTextColor={theme.colors.grey}
-                        />
-                    </View>
-                )
-            }
+                </S.BtnShowPassword>
+            </S.InputContainer>
 
-            <TouchableOpacity style={styles.btn} onPress={() => type == 'login' ? login(email, password) : signUp(email, password, name)}>
-                <Text style={styles.textBtn}>{type === 'login' ? 'Entrar' : 'Criar conta'}</Text>
-            </TouchableOpacity>
+
+            <S.Btn onPress={() => {
+                if (type === 'login') {
+                    login(email, password)
+                }
+                else {
+                    signUp(email, password, name)
+                }
+            }}>
+
+                <S.TextBtn>{type === 'login' ? 'Entrar' : 'Criar conta'}</S.TextBtn>
+            </S.Btn>
 
             <TouchableOpacity onPress={() => {
                 setError({})
@@ -101,6 +109,6 @@ export default function Login() {
                 <Text>{type === 'login' ? 'Não possui uma conta? Crie já!' : 'Já possui uma conta? Faça login!'}</Text>
             </TouchableOpacity>
 
-        </SafeAreaView>
+        </S.Container>
     );
 }

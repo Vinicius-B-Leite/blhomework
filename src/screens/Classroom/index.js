@@ -1,28 +1,67 @@
-import React, { useContext, useReducer } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useContext } from 'react';
+import { FlatList } from 'react-native';
 import Header from '../../components/Header'
 import { AuthContext } from '../../contexts/authContext';
-import { theme } from '../../theme';
-import { styles } from './styles';
 import FloatButton from '../../components/FloatButton'
-
+import HomeworkItem from '../../components/HomeworkItem';
+import Skeleton from '../../components/Skeleton';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { HomeworkContext } from '../../contexts/homeworkContext';
+import { useTheme } from 'styled-components';
+import * as S from './styles'
 
 export default function Classroom({ route }) {
 
+    const navigation = useNavigation()
+    const theme = useTheme()
     const { user } = useContext(AuthContext)
-    const { name, owner } = route.params.classroomData
+    const { getHomeworks, homeworks, setHomeworks, loading } = useContext(HomeworkContext)
+    const { name, owner, id } = route.params.classroomData
+
+    useFocusEffect(
+        useCallback(() => {
+            getHomeworks(id)
+
+            return () => setHomeworks()
+        }, [])
+    )
 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <S.Container>
             <Header goBackButton={true} />
 
-            <View style={styles.main}>
-                <Text style={styles.task}>Tarefas</Text>
-                <Text style={styles.classroomName}>{name}</Text>
-            </View>
+            <S.Main >
+                <S.Task >Tarefas</S.Task>
+                <S.ClassroomName>{name}</S.ClassroomName>
+            </S.Main>
 
-            {owner === user.uid && <FloatButton />}
-        </SafeAreaView>
+            {
+                loading && (
+
+                    <>
+                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                    </>
+                )
+            }
+
+            {
+                homeworks?.length > 0 ? (
+                    <FlatList
+                        contentContainerStyle={{ padding: '5%' }}
+                        data={homeworks}
+                        renderItem={({ item }) => <HomeworkItem item={item} />}
+                    />
+                ) :
+                    !loading && (<S.NoHomeworks>Não há tarefas de casa</S.NoHomeworks>)
+            }
+            {owner === user.uid && <FloatButton callback={() => navigation.navigate('CreateHomework', { id })} />}
+
+
+
+        </S.Container>
     );
 }

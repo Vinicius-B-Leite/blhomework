@@ -1,8 +1,8 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { View } from 'react-native';
-import Classroom from '../../screens/Classroom';
+
 import Home from '../../screens/Home';
+import ClassroomStack from '../ClassroomStack';
 
 
 const Stack = createStackNavigator()
@@ -16,7 +16,7 @@ export default function HomeStack() {
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
         }}>
             <Stack.Screen name='Home' component={Home} />
-            <Stack.Screen name='Classroom' component={Classroom} />
+            <Stack.Screen name='ClassroomStack' component={ClassroomStack} />
         </Stack.Navigator>
     );
 }

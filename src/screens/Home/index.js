@@ -1,47 +1,69 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import ClassRoomItem from '../../components/ClassRoomItem';
 import FloatButton from '../../components/FloatButton';
 import Header from '../../components/Header';
 import ModalCreateClassroom from '../../components/ModalCreateClassroom';
 import ModalEnterClassroom from '../../components/ModalEnterClassroom';
 import { ClassroomContext } from '../../contexts/classroomContext';
-import { styles } from './styles';
+import { NotifcationContext } from '../../contexts/notificationContext';
+import Skeleton from '../../components/Skeleton'
+import * as S from './styles'
+import { useTheme } from 'styled-components/native';
+import axios from 'axios';
 
 export default function Home() {
-
-    const { getClassroom, classrooms } = useContext(ClassroomContext)
-
+    const theme = useTheme()
+    const { getClassroom, classrooms, loading } = useContext(ClassroomContext)
+    const { getToken } = useContext(NotifcationContext)
     const [modalEnterClassroomVisible, setModalEnterClassroomVisible] = useState(false)
     const [modalCreateClassroomVisible, setModalCreateClassroomVisible] = useState(false)
 
+
     useEffect(() => {
+        getToken()
+
         getClassroom()
     }, [])
 
     return (
-        <SafeAreaView style={styles.container}>
+        <S.Container>
 
             <Header />
 
-            <View style={styles.main}>
+            <S.Main >
 
                 <TouchableOpacity style={{ position: 'relative' }} onPress={() => setModalEnterClassroomVisible(true)}>
-                    <Text style={styles.enterClassroom}>Entre em uma sala com um código</Text>
-                    <Text style={styles.enterClassroomIcon}>+</Text>
+                    <S.EnterClassroom>Entre em uma sala com um código</S.EnterClassroom>
+                    <S.EnterClassroomIcon>{'+'}</S.EnterClassroomIcon>
                 </TouchableOpacity>
 
+                {
+                    loading && classrooms?.length === 0 && (
+                        <>
+                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        </>
+                    )
+                }
 
-                <FlatList
-                    data={classrooms}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <ClassRoomItem item={item} />}
-                    contentContainerStyle={{ paddingTop: '5%' }}
-                />
-            </View>
+
+                {
+                    classrooms?.length > 0 && (
+                        <FlatList
+                            data={classrooms}
+                            keyExtractor={(item) => item.id.toString()}
+                            renderItem={({ item }) => <ClassRoomItem item={item} />}
+                            contentContainerStyle={{ paddingTop: '5%' }}
+                        />
+                    )
+                }
+            </S.Main>
             <FloatButton callback={() => setModalCreateClassroomVisible(true)} />
             <ModalEnterClassroom modalVisible={modalEnterClassroomVisible} onClose={() => setModalEnterClassroomVisible(false)} />
             <ModalCreateClassroom modalVisible={modalCreateClassroomVisible} onClose={() => setModalCreateClassroomVisible(false)} />
-        </SafeAreaView>
-    );
+        </S.Container>
+    )
 }

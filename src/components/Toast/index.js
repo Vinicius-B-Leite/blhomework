@@ -1,47 +1,43 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
-import { theme } from '../../theme';
+import { Animated } from 'react-native';
+import * as S from './styles'
 
-export default function Toast({ text, bg }) {
+
+
+export default function Toast({ text, bg, visible, onAnimatedFinished, duration }) {
 
     const opacity = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
-        Animated.sequence([
-            Animated.timing(opacity, {
-                toValue: 1,
-                duration: 1000,
-                useNativeDriver: true
-            }),
-            Animated.timing(opacity, {
-                toValue: 0,
-                duration: 1000,
-                useNativeDriver: true,
-                delay: 2000
+        if (visible === true) {
+            Animated.sequence([
+                Animated.timing(opacity, {
+                    toValue: 1,
+                    duration: 1000,
+                    useNativeDriver: true
+                }),
+                Animated.timing(opacity, {
+                    toValue: 0,
+                    duration: 1000,
+                    useNativeDriver: true,
+                    delay: duration || 3000
+                })
+            ]).start(() => {
+                if (onAnimatedFinished) {
+                    onAnimatedFinished()
+                }
             })
-        ]).start()
-    },[])
+        }
+
+    }, [visible])
+
+    if (!visible) return
 
     return (
-        <Animated.View style={[styles.container, { backgroundColor: bg || '#77dd77', opacity}]} >
-            <Text numberOfLines={1} style={styles.messagem} >{text}</Text>
-        </Animated.View>
+        <S.Container>
+            <S.Toast opacity={opacity} backgroundColor={bg} >
+                <S.Message numberOfLines={1} >{text}</S.Message>
+            </S.Toast>
+        </S.Container>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        paddingVertical: '1%',
-        paddingHorizontal: '5%',
-        marginTop: '5%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: theme.borderRadius.full
-    },
-    messagem: {
-        color: theme.colors.white,
-        fontSize: theme.font.sm,
-        fontWeight: 'bold'
-    }
-})
