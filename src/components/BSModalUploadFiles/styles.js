@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View``;
+export const Container = styled.View`
+`;
 export const Alert = styled.Text`
         color: ${({ theme }) => theme.colors.white} ;
         text-align: center;

@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components/native";
 import { Modalize } from "react-native-modalize";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { Dimensions } from "react-native";
 
 
 export const Container = styled.SafeAreaView`
@@ -80,5 +82,35 @@ export const Modal = styled(Modalize)`
         border-Top-Right-Radius: ${({ theme }) => theme.borderRadius.xmd}px;
         `
 
+export const CloseBottomSheet = styled.TouchableOpacity`
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height: 100%;
+        width: 100%;
+        background-color: ${({ theme }) => theme.colors.backgrounbColorSecundary};
+`
+export const ModalBottomSheet = styled(BottomSheet).attrs(({ theme }) => ({
+        handleStyle: {
+                backgroundColor: theme.colors.blackBackgroundColor,
+                borderTopLeftRadius: theme.borderRadius.xmd,
+                borderTopRightRadius: theme.borderRadius.xmd
+        },
+        style: {
+                backgroundColor: theme.colors.blackBackgroundColor
+        },
+        handleIndicatorStyle: {
+                backgroundColor: theme.colors.white, width: '50%'
+        },
+        backgroundStyle: {
+                backgroundColor: theme.colors.blackBackgroundColor
+        }
+}))``
 
 
+export const FilesList = styled(BottomSheetFlatList).attrs({
+
+})`
+        padding: 5%;
+
+`
