@@ -85,7 +85,7 @@ export default function CreateHomework({ navigation, route }) {
                         height='50%'
                     />
 
-                    <S.UploadAndDateContainer  >
+                    <S.UploadAndDateContainer>
                         <View>
                             <S.UploadIcon onPress={openModalize}>
                                 <AntDesign name='clouduploado' size={theme.icons.md} color={theme.colors.white} style={{ marginRight: '2%' }} />

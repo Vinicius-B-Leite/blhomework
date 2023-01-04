@@ -4,6 +4,7 @@ import firestore from '@react-native-firebase/firestore'
 
 import { AuthContext } from './authContext'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NotifcationContext } from './notificationContext';
 
 
 
@@ -12,6 +13,7 @@ export const HomeworkContext = createContext()
 export default function HomeworkProvider({ children }) {
 
     const { user } = useContext(AuthContext)
+    const { getTokensOfStudents, sendNotification } = useContext(NotifcationContext)
 
     const [filesOnUploading, setFilesOnUploading] = useState([])
 
@@ -83,7 +85,7 @@ export default function HomeworkProvider({ children }) {
 
 
     }
-    function cleanAllStates() {
+    function resetAllStates() {
         setFilesOnUploading([])
         setSubjectSelected()
         setDateSelected(new Date())
@@ -91,17 +93,31 @@ export default function HomeworkProvider({ children }) {
     }
     async function createHomework({ title, description, classroomID, callback }) {
         if (title !== '' && description !== '' && classroomID && subjectSelected) {
-            const ref = firestore().collection('classroom').doc(classroomID).collection('homeworks').doc(homeworkID)
-            await ref.set({
+            
+            const classroomRef = firestore().collection('classroom').doc(classroomID)
+            const homeworkRef = classroomRef.collection('homeworks').doc(homeworkID)
+            
+            const data = {
                 title,
                 description,
                 deadline: dateSelected,
                 subject: subjectSelected,
                 filesRefs: filesOnUploading.map(file => (file.ref))
-            })
-
-            cleanAllStates()
+            }
+            
+            await homeworkRef.set(data)
             callback()
+            
+            const tokens = await getTokensOfStudents(classroomID)
+            const { name: classroomName } = (await classroomRef.get()).data()
+            await sendNotification({
+                title: classroomName,
+                body: `Nova tarfa de ${data.subject.name} para ${data.deadline.getDate()}/${data.deadline.getMonth() + 1} \n${title}`,
+                tokens
+            })
+            
+            resetAllStates()
+            
         }
 
     }
@@ -172,10 +188,10 @@ export default function HomeworkProvider({ children }) {
 
         if (homeworkList !== null) {
 
-            if (homeworkList.includes(homeworkID) || status === 'remove'){
+            if (homeworkList.includes(homeworkID) || status === 'remove') {
                 homeworkList.splice(homeworkList.indexOf(homeworkID), 1)
             }
-            else{
+            else {
                 homeworkList.push(homeworkID)
             }
 
