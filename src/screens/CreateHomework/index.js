@@ -18,15 +18,18 @@ import { useTheme } from 'styled-components';
 export default function CreateHomework({ navigation, route }) {
     const theme = useTheme()
     const { subjectSelected, dateSelected, filesOnUploading, createHomework } = useContext(HomeworkContext)
+    const stack = navigation.getParent()
+    const tabBar = stack.getParent()
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+
     const [modalSubjectsVisible, setModalSubjectsVisible] = useState(false)
     const [calendarOpen, setCalendarOpen] = useState(false)
+
     const sheetRef = useRef(null);
     const [sheetPositon, setSheetPosition] = useState(-1) //-1: close; 0: min position; 1 max position
 
-    const stack = navigation.getParent()
-    const tabBar = stack.getParent()
 
     function openBottomSheet() {
         setSheetPosition(0)
@@ -51,6 +54,7 @@ export default function CreateHomework({ navigation, route }) {
         tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
         navigation.goBack()
     }
+    
 
 
     return (
@@ -115,7 +119,7 @@ export default function CreateHomework({ navigation, route }) {
 
             <ModalSubjects visible={modalSubjectsVisible} onClose={() => setModalSubjectsVisible(false)} />
 
-            {sheetPositon !== -1 && <S.CloseBottomSheet onPress={closeBottomSheet} />}
+            {sheetPositon > -1 && <S.CloseBottomSheet onPress={closeBottomSheet} />}
 
 
             <S.ModalBottomSheet

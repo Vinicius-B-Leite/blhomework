@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components/native";
-import { Modalize } from "react-native-modalize";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Dimensions } from "react-native";
 
@@ -74,13 +73,6 @@ export const UploadAndDateContainer = styled.View`
 export const CalendarContainer = styled.TouchableOpacity`
         flex-Direction: row;
         align-Items: center;`
-
-export const Modal = styled(Modalize)`
-        padding: 10%;
-        background-Color:${({ theme }) => theme.colors.backgrounbColor} ;
-        border-Top-Left-Radius: ${({ theme }) => theme.borderRadius.xmd}px;
-        border-Top-Right-Radius: ${({ theme }) => theme.borderRadius.xmd}px;
-        `
 
 export const CloseBottomSheet = styled.TouchableOpacity`
         position: absolute;
