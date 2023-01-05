@@ -26,7 +26,8 @@ export const InputContainer = styled.View`
 
 
 export const Inp = styled.TextInput`
-        margin-left: 2%;
+        margin-left: 5%;
         color: ${({ theme }) => theme.colors.white} ; 
         font-size: ${({ theme }) => theme.font.sm}px;
+        flex: 1;
 `

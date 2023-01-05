@@ -2,10 +2,10 @@ import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-        flex: 1;
+        width: 100%;
+        height: ${Dimensions.get('screen').height / 14}px;
         flex-direction: row;
         background-color: ${({ theme }) => theme.colors.blackBackgroundColor} ;
-        height: ${Dimensions.get('screen').height / 14}px;
         align-items: center;
         border-radius: ${({ theme }) => theme.borderRadius.sm}px;
         margin: 1% 0;
