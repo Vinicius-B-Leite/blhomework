@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
-import { ActivityIndicator, Image, Modal, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Image, Modal, Share, TouchableOpacity } from 'react-native';
 import { ClassroomContext } from '../../contexts/classroomContext';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { pickDocument } from '../../utils/pickDocument';
@@ -28,7 +28,13 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
         createClassRoom({
             photo: classRoomPhoto[0].fileCopyUri,
             name: classroomName,
-            callback: () => setToastSettings({ visible: true, text: 'Sala criada', bg: theme.colors.green, duration: 500 })
+            callback: async () => {
+                setToastSettings({ visible: true, text: 'Sala criada', bg: theme.colors.green, duration: 500 })
+                await Share.share({
+                    message: `Entre em minha sala usando o código ${classroomID}`, 
+                    title: `Entre em minha sala usando o código ${classroomID}`,
+                    url: 'https://www.youtube.com'})
+            }
         })
 
     }
@@ -49,7 +55,9 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
                         {
                             classRoomPhoto[0] ?
                                 (
-                                    <Image source={{ uri: classRoomPhoto[0].fileCopyUri }} style={{ width: '100%', height: '100%', borderRadius: theme.borderRadius.full }} />
+                                    <Image
+                                        source={{ uri: classRoomPhoto[0].fileCopyUri }}
+                                        style={{ width: '100%', height: '100%', borderRadius: theme.borderRadius.full }} />
                                 )
                                 :
                                 (
