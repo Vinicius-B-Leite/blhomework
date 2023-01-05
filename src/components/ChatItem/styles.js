@@ -1,16 +1,19 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
         flex: 1;
         flex-direction: row;
         background-color: ${({ theme }) => theme.colors.blackBackgroundColor} ;
-        padding: 3%;
+        height: ${Dimensions.get('screen').height / 14}px;
         align-items: center;
         border-radius: ${({ theme }) => theme.borderRadius.sm}px;
+        margin: 1% 0;
+        padding: 0 3%;
 `;
 export const Avatar = styled.Image`
-        width: 12%;
-        height: 100%;
+        width: ${Dimensions.get('screen').width / 10}px;
+        height: ${Dimensions.get('screen').width / 10}px;
         border-radius: ${({ theme }) => theme.borderRadius.full}px; 
         border-width: .1px;
         border-color: ${({ theme }) => theme.colors.grey} ;
