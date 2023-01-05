@@ -16,6 +16,7 @@ export default function ChatContextProvider({ children }) {
     const { getTokensOfStudents, sendNotification } = useContext(NotifcationContext)
     const [chats, setChats] = useState([])
     const [messages, setMessages] = useState([])
+    const [loading, setloading] = useState(false)
 
     async function getLastMessage(docID) {
         const documentSnapshot = await firestore()
@@ -30,6 +31,7 @@ export default function ChatContextProvider({ children }) {
     }
 
     async function getChats() {
+        setloading(true)
         const querySnapshot = await firestore().collection('classroom').where('students', 'array-contains', user.uid).get()
 
         let arrayChats = []
@@ -45,6 +47,7 @@ export default function ChatContextProvider({ children }) {
 
         }
 
+        setloading(false)
         setChats(arrayChats)
     }
 
@@ -165,7 +168,16 @@ export default function ChatContextProvider({ children }) {
     }
 
     return (
-        <ChatContext.Provider value={{ getChats, chats, getLastMessage, getMessages, messages, sendMessage, getNumberOfMessagesUnread }}>
+        <ChatContext.Provider value={{
+            getChats,
+            chats,
+            getLastMessage,
+            getMessages,
+            messages,
+            sendMessage,
+            getNumberOfMessagesUnread,
+            loading
+        }}>
             {children}
         </ChatContext.Provider>
     );

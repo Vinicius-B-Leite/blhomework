@@ -2,13 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import * as S from './styles.js'
 import { Alert } from 'react-native';
-import { HomeworkContext } from '../../contexts/homeworkContext'
+import { ClassroomContext } from '../../contexts/classroomContext.js';
 
 
 
 export default function ClassRoomItem({ item }) {
     const navigation = useNavigation()
-    const { goOutClassroom } = useContext(HomeworkContext)
+    const { goOutClassroom } = useContext(ClassroomContext)
 
 
     function handleGoout() {

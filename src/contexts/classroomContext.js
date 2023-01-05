@@ -70,8 +70,21 @@ export default function ClassrommProvider({ children }) {
             })
 
     }
+    async function goOutClassroom({ classroomKey }) {
+
+        const classroomRef = firestore().collection('classroom').doc(classroomKey)
+
+        let { students } = (await classroomRef.get()).data()
 
 
+        const index = students.indexOf(user.uid)
+
+        if (students.length === 1) {
+            await classroomRef.delete()
+            return
+        }
+        await classroomRef.update({ students: students.splice(index, 1) })
+    }
 
     async function enterInClassroom(key, onFinished, setError) {
         setLoading(true)
@@ -112,6 +125,7 @@ export default function ClassrommProvider({ children }) {
             getClassroom,
             loading,
             enterInClassroom,
+            goOutClassroom
         }}>
             {children}
         </ClassroomContext.Provider>

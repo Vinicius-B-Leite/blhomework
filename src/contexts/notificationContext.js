@@ -15,18 +15,23 @@ export default function NotificationProvider({ children }) {
     const { user } = useContext(AuthContext)
 
     async function getToken() {
-        const tokenFCM = await messaging().getToken()
-        const tokenAsyncStorage = await AsyncStorage.getItem('_token')
+
+        const [tokenFCM, tokenAsyncStorage] = await Promise.all([
+            messaging().getToken(),
+            AsyncStorage.getItem('_token')
+        ])
 
         if (tokenAsyncStorage !== tokenFCM) {
-            await firestore().collection('users').doc(user.uid).update({ tokenFCM })
-            await AsyncStorage.setItem('_token', JSON.stringify(tokenFCM))
+            await Promise.all([
+                firestore().collection('users').doc(user.uid).update({ tokenFCM }),
+                AsyncStorage.setItem('_token', JSON.stringify(tokenFCM))
+            ])
         }
 
         console.log(`tokenAsyncStorage:  ${tokenFCM}\ntokenFCM: ${tokenFCM}`)
     }
 
-    async function sendNotification({title, body, tokens}) {
+    async function sendNotification({ title, body, tokens }) {
         await axios.post('https://apiblhomework.onrender.com/notification', {
             title, body, tokens
         })
@@ -39,7 +44,7 @@ export default function NotificationProvider({ children }) {
 
         for (const student of students) {
             const { tokenFCM } = (await firestore().collection('users').doc(student).get()).data()
-             tokenFCM !== user.tokenFCM && tokens.push(tokenFCM)
+            tokenFCM !== user.tokenFCM && tokens.push(tokenFCM)
         }
 
         return tokens

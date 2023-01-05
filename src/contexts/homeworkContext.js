@@ -150,24 +150,7 @@ export default function HomeworkProvider({ children }) {
         setLoading(false)
     }
 
-    async function goOutClassroom({ classroomKey }) {
 
-        const classroomRef = firestore()
-            .collection('classroom')
-            .doc(classroomKey)
-
-        let data = await classroomRef.get()
-
-
-        let { students } = data.data()
-        const index = students.indexOf(user.uid)
-
-        if (students.length === 1) {
-            await classroomRef.delete()
-            return
-        }
-        await classroomRef.update({ students: students.splice(index, 1) })
-    }
 
     async function getHomeworkFiles(ref, callback) {
         setLoading(true)
@@ -229,7 +212,6 @@ export default function HomeworkProvider({ children }) {
             setHomeworks,
             stopSendToStorage,
             getHomeworkFiles,
-            goOutClassroom,
             setHomeworkDoneStatus,
             homeworksDone
         }}>

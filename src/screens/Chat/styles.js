@@ -31,3 +31,9 @@ export const Inp = styled.TextInput`
         font-size: ${({ theme }) => theme.font.sm}px;
         flex: 1;
 `
+
+export const NoChats = styled.Text`
+        color: ${({ theme }) => theme.colors.contrast};
+        font-size: ${({ theme }) => theme.font.sm}px;
+        margin-top: 5%;
+`

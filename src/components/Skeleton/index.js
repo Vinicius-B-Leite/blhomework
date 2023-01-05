@@ -24,7 +24,7 @@ export default function Skeleton({ w, h, r,  bg }) {
     }, [])
 
     return (
-        <View style={{ width: w, height: h, borderRadius: r, backgroundColor: bg, marginHorizontal: '5%', overflow: 'hidden', marginVertical: '3%' }}>
+        <View style={{ width: w, height: h, borderRadius: r, backgroundColor: bg, overflow: 'hidden', marginVertical: '3%' }}>
             <AnimatedLinearGradient
                 colors={[theme.colors.blackBackgroundColor,theme.colors.backgrounbColor, theme.colors.blackBackgroundColor]}
                 start={{ x: 0.0, y: 0.0 }}
