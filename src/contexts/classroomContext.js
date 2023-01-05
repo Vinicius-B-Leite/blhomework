@@ -26,10 +26,15 @@ export default function ClassrommProvider({ children }) {
 
         if (photo && name != '') {
             setLoading(true)
-            let newKey = await firestore().collection('classroom').doc().id
-            let avatarURL = await sendImageToStorage(newKey, photo)
+            const classroomRef = firestore().collection('classroom')
 
-            firestore().collection('classroom').doc(newKey).set({
+            const [newKey, avatarURL] = await Promise.all([
+                classroomRef.doc().id,
+                sendImageToStorage(newKey, photo)
+            ])
+
+
+            classroomRef.doc(newKey).set({
                 avatarURL,
                 owner: user.uid,
                 students: [user.uid],
@@ -40,7 +45,8 @@ export default function ClassrommProvider({ children }) {
                 if (callback) {
                     callback(documentReference)
                 }
-            }).finally(() => setLoading(false))
+            })
+            setLoading(false)
         }
     }
 
@@ -72,22 +78,18 @@ export default function ClassrommProvider({ children }) {
 
         if (key === '') return
 
-        let studentsList = await firestore()
-            .collection('classroom')
-            .doc(key)
-            .get()
+        const classroomRef = firestore().collection('classroom').doc(key)
+
+        let studentsList = await classroomRef.get()
 
         if (studentsList.exists) {
             studentsList.data().students.push(user.uid)
 
-            await firestore()
-                .collection('classroom')
-                .doc(key)
-                .update(
-                    {
-                        students: studentsList.data().students
-                    }
-                )
+            await classroomRef.update(
+                {
+                    students: studentsList.data().students
+                }
+            )
 
             if (onFinished) {
                 onFinished()

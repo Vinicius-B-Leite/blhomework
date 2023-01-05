@@ -92,11 +92,15 @@ export default function HomeworkProvider({ children }) {
         setHomeworkID(generateHomeworkID().id)
     }
     async function createHomework({ title, description, classroomID, callback }) {
-        if (title !== '' && description !== '' && classroomID && subjectSelected) {
-            
+        const isAnyFileUploading = filesOnUploading.findIndex((value) => value.porcent !== 100)
+
+        if (filesOnUploading.length > 0 && isAnyFileUploading !== -1) return
+
+        else if (title !== '' && description !== '' && classroomID && subjectSelected ) {
+
             const classroomRef = firestore().collection('classroom').doc(classroomID)
             const homeworkRef = classroomRef.collection('homeworks').doc(homeworkID)
-            
+
             const data = {
                 title,
                 description,
@@ -104,20 +108,21 @@ export default function HomeworkProvider({ children }) {
                 subject: subjectSelected,
                 filesRefs: filesOnUploading.map(file => (file.ref))
             }
+
+            const [tokens, classroomData ] = await Promise.all([
+                getTokensOfStudents(classroomID),
+                classroomRef.get(),
+                homeworkRef.set(data),
+            ])
             
-            await homeworkRef.set(data)
             callback()
-            
-            const tokens = await getTokensOfStudents(classroomID)
-            const { name: classroomName } = (await classroomRef.get()).data()
+            resetAllStates()
+
             await sendNotification({
-                title: classroomName,
+                title: classroomData.data().name,
                 body: `Nova tarfa de ${data.subject.name} para ${data.deadline.getDate()}/${data.deadline.getMonth() + 1} \n${title}`,
                 tokens
             })
-            
-            resetAllStates()
-            
         }
 
     }
@@ -161,15 +166,14 @@ export default function HomeworkProvider({ children }) {
             await classroomRef.delete()
             return
         }
-        classroomRef.update({ students: students.splice(index, 1) })
+        await classroomRef.update({ students: students.splice(index, 1) })
     }
 
     async function getHomeworkFiles(ref, callback) {
         setLoading(true)
 
-        const url = await storage().ref(ref).getDownloadURL()
-
-        let metadata = await storage().ref(ref).getMetadata()
+        const refStorage =storage().ref(ref)
+        const [url, metadata] = await Promise.all([refStorage.getDownloadURL(), refStorage.getMetadata()])
 
         const file = {
             url,
@@ -196,7 +200,6 @@ export default function HomeworkProvider({ children }) {
             }
 
             setHomeworksDone(homeworkList)
-            console.log("🚀 ~ file: homeworkContext.js:183 ~ setHomeworkDoneStatus ~ homeworkList", homeworkList)
             await AsyncStorage.setItem(`_${classrromID}`, JSON.stringify(homeworkList))
             return
         }

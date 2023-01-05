@@ -144,15 +144,20 @@ export default function AuthContextProvider({ children }) {
         await ref.putFile(file.fileCopyUri)
 
         const downloadUrl = await ref.getDownloadURL()
-        await firestore().collection('users').doc(user.uid).update({ photoURL: downloadUrl })
-        await auth().currentUser.updateProfile({ photoURL: downloadUrl })
+
+        await Promise.all([
+            firestore().collection('users').doc(user.uid).update({ photoURL: downloadUrl }),
+            auth().currentUser.updateProfile({ photoURL: downloadUrl })
+        ])
     }
 
     async function changeUserName(newName) {
         if (newName !== '') {
-            await auth().currentUser.updateProfile({ displayName: newName })
+            await Promise.all([
+                auth().currentUser.updateProfile({ displayName: newName }),
+                firestore().collection('users').doc(user.uid).update({ displayName: newName })
+            ])
             setUser(auth().currentUser.toJSON())
-            await firestore().collection('users').doc(user.uid).update({ displayName: newName })
         }
     }
 
@@ -167,9 +172,11 @@ export default function AuthContextProvider({ children }) {
     async function changePassword(newPassword) {
         if (newPassword !== '') {
             await reauthenticate()
-            await auth().currentUser.updatePassword(newPassword)
-            setUser((oldUser) => ({ ...oldUser}))
-            await AsyncStorage.setItem('_userPassword', newPassword)
+            await Promise.all([
+                auth().currentUser.updatePassword(newPassword),
+                AsyncStorage.setItem('_userPassword', newPassword)
+            ])
+            setUser((oldUser) => ({ ...oldUser }))
         }
     }
     async function reauthenticate() {

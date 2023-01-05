@@ -39,7 +39,7 @@ export default function NotificationProvider({ children }) {
 
         for (const student of students) {
             const { tokenFCM } = (await firestore().collection('users').doc(student).get()).data()
-            tokens.push(tokenFCM)
+             tokenFCM !== user.tokenFCM && tokens.push(tokenFCM)
         }
 
         return tokens

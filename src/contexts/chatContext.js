@@ -83,8 +83,6 @@ export default function ChatContextProvider({ children }) {
     async function getNumberOfMessagesUnread(chatId) {
         const asyncstorageLastMessage = await getLastMessageRead(chatId)
 
-        if (!asyncstorageLastMessage) return
-
         const lastMessageRead = new Date(asyncstorageLastMessage)
 
         const docs = await firestore()
@@ -94,7 +92,7 @@ export default function ChatContextProvider({ children }) {
             .doc('chatroom')
             .collection('messages')
             .orderBy('createAt')
-            .startAfter(lastMessageRead)
+            .startAfter(asyncstorageLastMessage ? lastMessageRead : new Date())
             .get()
 
         return docs.size
@@ -128,7 +126,7 @@ export default function ChatContextProvider({ children }) {
     }
 
     async function sendMessage({ message, image, classroomId }) {
-        
+
         if (message === '' && !image) return
 
 
@@ -149,17 +147,20 @@ export default function ChatContextProvider({ children }) {
             data.imageURL = await storageRef.getDownloadURL()
 
         }
-        await lastMessageRef.set({
-            lastMessage: data.message || 'photo',
-        })
+
+        const [tokens, classroomName] = await Promise.all([
+            getTokensOfStudents(classroomId),
+            firestore().collection('classroom').doc(classroomId).get(),
+            lastMessageRef.set({ lastMessage: data.message || 'imagem' }),
+            messageCollectionRef.add(data)
+        ])
 
         await sendNotification({
-            tokens: (await getTokensOfStudents(classroomId)).filter(tok=>tok!==user.uid),
-            title: (await firestore().collection('classroom').doc(classroomId).get()).data().name,
+            tokens,
+            title: classroomName.data().name,
             body: data.message !== '' ? data.message : 'imagem'
         })
 
-        await messageCollectionRef.add(data)
 
     }
 

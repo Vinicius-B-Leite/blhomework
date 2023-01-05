@@ -1,5 +1,5 @@
 import React, { useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Divisor from '../../components/Divisor'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import BSModalUploadFiles from '../../components/BSModalUploadFiles'
@@ -51,6 +51,7 @@ export default function CreateHomework({ navigation, route }) {
     }
 
     function handleGoBack() {
+        Keyboard.dismiss()
         tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
         navigation.goBack()
     }
