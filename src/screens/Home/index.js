@@ -41,10 +41,10 @@ export default function Home() {
                 {
                     loading && classrooms?.length === 0 && (
                         <>
-                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                            <Skeleton w='90%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='100%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='100%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='100%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                            <Skeleton w='100%' h='12%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
                         </>
                     )
                 }

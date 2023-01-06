@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import Header from '../../components/Header'
 import { AuthContext } from '../../contexts/authContext';
 import FloatButton from '../../components/FloatButton'
@@ -39,12 +39,12 @@ export default function Classroom({ route }) {
             {
                 loading && (
 
-                    <>
-                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                        <Skeleton w='90%' h='10%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
-                    </>
+                    <View style={{marginHorizontal: '5%'}}>
+                        <Skeleton w='100%' h='13%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        <Skeleton w='100%' h='13%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        <Skeleton w='100%' h='13%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                        <Skeleton w='100%' h='13%' r={theme.borderRadius.sm} ph='5%' bg={theme.colors.blackBackgroundColor} />
+                    </View>
                 )
             }
 

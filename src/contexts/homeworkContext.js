@@ -94,7 +94,7 @@ export default function HomeworkProvider({ children }) {
     async function createHomework({ title, description, classroomID, callback }) {
         const isAnyFileUploading = filesOnUploading.findIndex((value) => value.porcent !== 100)
 
-        if (filesOnUploading.length > 0 && isAnyFileUploading !== -1) return
+        if (filesOnUploading.length > 0 && isAnyFileUploading > 0) return
 
         else if (title !== '' && description !== '' && classroomID && subjectSelected ) {
 
