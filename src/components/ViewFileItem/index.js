@@ -40,10 +40,10 @@ export default function ViewFileItem({ item }) {
             {
                 item.ext.includes('image') ?
                     (
-                        <Feather name='image' size={theme.icons.sm} color={theme.colors.white} />
+                        <Feather name='image' size={theme.icons.sm} color={theme.colors.text} />
                     ) :
                     (
-                        <Ionicons name='ios-document' size={theme.icons.sm} color={theme.colors.white} />
+                        <Ionicons name='ios-document' size={theme.icons.sm} color={theme.colors.text} />
                     )
             }   
 

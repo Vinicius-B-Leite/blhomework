@@ -70,7 +70,7 @@ export default function FilesItem({ item, porcentage, index }) {
                         <Circle
                             cx='50%'
                             cy='50%'
-                            stroke={theme.colors.white}
+                            stroke={theme.colors.text}
                             strokeOpacity={0.3}
                             strokeWidth={2}
                             fill='transparent'
@@ -88,7 +88,7 @@ export default function FilesItem({ item, porcentage, index }) {
                     </G>
                 </Svg>
                 <S.XIcon onPress={() => stopSendToStorage({ fileName: item.name, classroomID: route.params.id, index })}>
-                    <Feather name='x' size={theme.icons.sm} color={theme.colors.white} />
+                    <Feather name='x' size={theme.icons.sm} color={theme.colors.text} />
                 </S.XIcon>
 
             </S.Right>

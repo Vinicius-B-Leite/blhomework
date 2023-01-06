@@ -14,7 +14,7 @@ export const Header = styled.View`
 `
 export const HeaderTitle = styled.Text`
         font-size: ${({theme}) => theme.font.md}px;
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
         font-weight: bold;
 `
 export const Main = styled.View`
@@ -34,11 +34,11 @@ export const Avatar = styled.Image`
         height: 90%;
 `
 export const UserName = styled.Text`
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
         font-size: ${({theme}) => theme.font.sm}px;
 `
 export const Email = styled.Text`
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
         font-size: ${({theme}) => theme.font.sm}px;
         margin-bottom: 5%;
 `

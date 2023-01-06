@@ -48,7 +48,7 @@ export default function Homework({ route, navigation }) {
 
 
                 {
-                    loading ? <ActivityIndicator style={{ marginTop: '8%' }} color={theme.colors.white} size={theme.icons.md} /> :
+                    loading ? <ActivityIndicator style={{ marginTop: '8%' }} color={theme.colors.text} size={theme.icons.md} /> :
                         (
                             <S.FilesContainer>
                                 <S.SimpleText >Material de apoio</S.SimpleText>

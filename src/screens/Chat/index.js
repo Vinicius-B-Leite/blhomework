@@ -40,7 +40,7 @@ export default function Chat({ navigation }) {
             <S.Main >
 
                 <S.InputContainer  >
-                    <Feather name='search' size={theme.icons.sm} color={theme.colors.white} />
+                    <Feather name='search' size={theme.icons.sm} color={theme.colors.text} />
                     <S.Inp
                         value={searchInput}
                         onChangeText={handleFilter}

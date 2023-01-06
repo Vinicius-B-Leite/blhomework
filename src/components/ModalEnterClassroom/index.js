@@ -59,7 +59,7 @@ export default function ModalEnterClassroom({ modalVisible, onClose }) {
                     />
                     <S.Btn onPress={handleEnteClassroom}>
                         <S.TextBtn>
-                            {loading ? <ActivityIndicator color={theme.colors.white} size={theme.icons.sm} /> : 'Entrar'}
+                            {loading ? <ActivityIndicator color={theme.colors.text} size={theme.icons.sm} /> : 'Entrar'}
                         </S.TextBtn>
                     </S.Btn>
                 </S.Main>

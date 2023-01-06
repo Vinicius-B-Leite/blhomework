@@ -75,7 +75,7 @@ export default function ModalSubjects({ visible, onClose }) {
 
                 <S.Header >
                     <S.IconsGoback>
-                        <Ionicons name='chevron-back' size={theme.icons.lg} color={theme.colors.white} />
+                        <Ionicons name='chevron-back' size={theme.icons.lg} color={theme.colors.text} />
                     </S.IconsGoback>
                     <S.Search >
                         <S.Input
@@ -85,7 +85,7 @@ export default function ModalSubjects({ visible, onClose }) {
                             placeholderTextColor={theme.colors.grey}
                             textAlign='right'
                         />
-                        <AntDesign name='search1' size={theme.icons.sm} color={theme.colors.white} />
+                        <AntDesign name='search1' size={theme.icons.sm} color={theme.colors.text} />
                     </S.Search>
                 </S.Header>
 

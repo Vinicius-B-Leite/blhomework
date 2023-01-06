@@ -21,7 +21,7 @@ export const Avatar = styled.Image`
 `;
 export const ChatName = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px ;
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
 `;
 export const LastMessage = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
@@ -33,7 +33,7 @@ export const MessagesUnread = styled.Text`
         right: -25;
         top: 20%;
         font-size:  ${({ theme }) => theme.font.vsm}px;
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
         padding: 2% 4%;
         border-radius:  ${({ theme }) => theme.borderRadius.full}px ;
 `;

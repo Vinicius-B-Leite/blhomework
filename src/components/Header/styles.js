@@ -20,7 +20,7 @@ export const Avatar = styled.Image`
         border-radius: ${({ theme }) => theme.borderRadius.full}px ;
 `;
 export const UserName = styled.Text`
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
         font-size: ${({ theme }) => theme.font.sm}px;
-        margin-left: 5%;
+        margin-left: 10%;
 `;

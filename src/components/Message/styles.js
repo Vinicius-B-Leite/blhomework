@@ -34,7 +34,7 @@ export const Gradient = styled(LinearGradient)`
 `
 export const Message = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         font-weight: 600;
 `
 export const MessageImage = styled(AutoHeightImage)`

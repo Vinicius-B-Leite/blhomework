@@ -45,7 +45,7 @@ export default function Login() {
             {
                 type === 'singup' && (
                     <S.InputContainer error={error?.userName}>
-                        <FontAwesome5 name='user' size={theme.icons.sm} colors={theme.colors.white} />
+                        <FontAwesome5 name='user' size={theme.icons.sm} colors={theme.colors.text} />
                         <S.Input
                             value={name}
                             onChangeText={setName}
@@ -57,7 +57,7 @@ export default function Login() {
             }
 
             <S.InputContainer error={error?.email}>
-                <MaterialCommunityIcons name='email' size={theme.icons.sm} colors={theme.colors.white} />
+                <MaterialCommunityIcons name='email' size={theme.icons.sm} colors={theme.colors.text} />
                 <S.Input
                     value={email}
                     onChangeText={setEmail}
@@ -69,7 +69,7 @@ export default function Login() {
             </S.InputContainer>
 
             <S.InputContainer error={error.password}>
-                <FontAwesome name='lock' size={theme.icons.sm} colors={theme.colors.white} />
+                <FontAwesome name='lock' size={theme.icons.sm} colors={theme.colors.text} />
                 <S.Input
                     value={password}
                     onChangeText={setPassword}
@@ -79,10 +79,10 @@ export default function Login() {
                 />
                 <S.BtnShowPassword onPress={() => setShowPassword(!showPassword)}>
                     {showPassword ? (
-                        <Entypo name='eye' size={theme.icons.sm} colors={theme.colors.white} />
+                        <Entypo name='eye' size={theme.icons.sm} colors={theme.colors.text} />
                     ) :
                         (
-                            <Entypo name='eye-with-line' size={theme.icons.sm} colors={theme.colors.white} />
+                            <Entypo name='eye-with-line' size={theme.icons.sm} colors={theme.colors.text} />
                         )}
 
 

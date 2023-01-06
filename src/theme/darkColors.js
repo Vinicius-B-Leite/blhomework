@@ -6,7 +6,7 @@ export const darkColors = {
     contrast: '#48CAE4',
     disableContrast: '#175b69',
     contrastTrasnparent: 'rgba(72, 202, 228, 0.05)',
-    white: '#fff',
+    text: '#fff',
     grey: '#808080',
     lightGrey: '#aba9a9',
     red: '#FF0000',

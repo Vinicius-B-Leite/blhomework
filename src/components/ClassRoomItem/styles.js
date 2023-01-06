@@ -16,7 +16,7 @@ export const Avatar = styled.Image`
         border-radius: ${({theme}) => theme.borderRadius.full}px;
 `;
 export const ClassroomName = styled.Text`
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
         margin-left: 5%;
         font-size: ${({theme}) => theme.font.sm}px;
 `;

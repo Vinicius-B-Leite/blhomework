@@ -23,7 +23,7 @@ export const Search = styled.View`
 `
 export const Input = styled.TextInput`
         flex: 1;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         margin-right: 5%;
         font-size: ${({ theme }) => theme.font.sm}px;
 `

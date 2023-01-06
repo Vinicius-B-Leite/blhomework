@@ -8,7 +8,7 @@ export default function FloatButton({callback}) {
     const theme = useTheme()
     return (
         <S.Container onPress={() => callback()} >
-            <Ionicons name='ios-add-outline' size={theme.icons.lg} color={theme.colors.white}/>
+            <Ionicons name='ios-add-outline' size={theme.icons.lg} color={theme.colors.text}/>
         </S.Container>
     );
 }

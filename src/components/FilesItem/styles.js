@@ -31,7 +31,7 @@ export const FileEXT = styled.Text`
 `;
 export const Info = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
-        color:  ${({ theme }) => theme.colors.white};
+        color:  ${({ theme }) => theme.colors.text};
         width: 100%;
         margin-left: 5%;
 `;

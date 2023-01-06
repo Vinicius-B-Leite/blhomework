@@ -15,7 +15,7 @@ export const Header = styled.View`
 `
 export const TextGoBack = styled.Text`
         font-size: ${({theme}) => theme.font.md}px ;
-        color: ${({theme}) => theme.colors.white} ;
+        color: ${({theme}) => theme.colors.text} ;
 `
 export const SucessButon = styled.TouchableOpacity`
         width: 20%;
@@ -27,7 +27,7 @@ export const Main = styled.View`
 `
 export const Title = styled.Text`
         font-size: ${({theme}) => theme.font.md}px;
-        color: ${({theme}) => theme.colors.white} ;
+        color: ${({theme}) => theme.colors.text} ;
         padding-bottom: 1%;
 `
 export const Desciption = styled.ScrollView`

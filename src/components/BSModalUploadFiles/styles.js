@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
 `;
 export const Alert = styled.Text`
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
         text-align: center;
         font-size: ${({ theme }) => theme.font.xsm}px ;
 `;
@@ -27,6 +27,6 @@ export const UploadContainer = styled.TouchableOpacity`
         background-color: ${({ theme }) => theme.colors.contrastTrasnparent} ;
 `;
 export const UploadText = styled.Text`
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
         font-size: ${({ theme }) => theme.font.sm}px;
 `;

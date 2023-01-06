@@ -15,7 +15,7 @@ export const TitleContainer = styled.View`
 `
 export const Title = styled.Text`
         font-size: ${({ theme }) => theme.font.lg}px;
-        color: ${({ color, theme }) => color || theme.colors.white};
+        color: ${({ color, theme }) => color || theme.colors.text};
 `
 export const TitleContrast = styled.Text`
         color: ${({ theme }) => theme.colors.contrast} ;
@@ -58,7 +58,7 @@ export const Btn = styled.TouchableOpacity`
 `
 export const TextBtn = styled.Text`
         font-size: ${({ theme }) => theme.font.md}px ;
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
 `
 
 

@@ -76,7 +76,7 @@ export default function CreateHomework({ navigation, route }) {
                 <S.Main>
                     <S.SelectSubject onPress={() => setModalSubjectsVisible(true)}>
                         <S.InactiveOrActiveText active={!!subjectSelected} color={subjectSelected?.color}>{subjectSelected ? subjectSelected.name : 'Disciplina'}</S.InactiveOrActiveText>
-                        <AntDesign name='down' size={theme.icons.sm} color={theme.colors.white} />
+                        <AntDesign name='down' size={theme.icons.sm} color={theme.colors.text} />
                     </S.SelectSubject>
 
                     <S.Inp
@@ -100,13 +100,13 @@ export default function CreateHomework({ navigation, route }) {
                     <S.UploadAndDateContainer>
                         <View>
                             <S.UploadIcon onPress={openBottomSheet}>
-                                <AntDesign name='clouduploado' size={theme.icons.md} color={theme.colors.white} style={{ marginRight: '2%' }} />
+                                <AntDesign name='clouduploado' size={theme.icons.md} color={theme.colors.text} style={{ marginRight: '2%' }} />
                                 <Text>Material de apoio</Text>
                             </S.UploadIcon>
                         </View>
 
                         <S.CalendarContainer onPress={() => setCalendarOpen(true)} >
-                            <AntDesign name='calendar' size={theme.icons.sm} color={theme.colors.white} style={{ marginRight: '3%' }} />
+                            <AntDesign name='calendar' size={theme.icons.sm} color={theme.colors.text} style={{ marginRight: '3%' }} />
                             <Text>{dateSelected.getDate()}/{dateSelected.getMonth() + 1}</Text>
                         </S.CalendarContainer>
                     </S.UploadAndDateContainer>

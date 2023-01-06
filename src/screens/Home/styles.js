@@ -11,7 +11,7 @@ export const Main = styled.View`
 `
 export const EnterClassroom = styled.Text`
         font-size: ${({ theme }) => theme.font.md}px;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         textDecorationLine: underline;
 `
 export const EnterClassroomIcon = styled.Text`

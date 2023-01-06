@@ -15,7 +15,7 @@ export const Initials = styled.Text`
 `;
 export const Text = styled.Text`
         font-size: ${({theme}) => theme.font.sm}px;
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
 `;
 export const DarkBackground = styled.View`
         background-color: rgba(0, 0, 0, 0.8);

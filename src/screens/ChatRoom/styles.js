@@ -23,7 +23,7 @@ export const Avatar = styled.Image`
 `
 export const Title = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
 `
 export const InputArea = styled.View`
         flex-direction: row;
@@ -35,7 +35,7 @@ export const InputArea = styled.View`
 `
 export const Input = styled.TextInput`
         flex: 1;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
 `
 export const ButtonImage = styled.TouchableOpacity`
         flex-direction: row;
@@ -58,7 +58,7 @@ export const ButtonSendMessage = styled.TouchableOpacity`
 
 `
 export const SendIcon = styled(Feather)`
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         margin-top: 3%;
 `
 

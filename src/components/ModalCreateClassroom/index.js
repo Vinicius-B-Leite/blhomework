@@ -61,7 +61,7 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
                                 )
                                 :
                                 (
-                                    <Ionicons name='add' color={theme.colors.white} size={theme.icons.lg} />
+                                    <Ionicons name='add' color={theme.colors.text} size={theme.icons.lg} />
                                 )
                         }
                     </S.PickDocument>
@@ -90,7 +90,7 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
 
                         <S.CreateClassroomButtonText >{
                             loading ?
-                                <ActivityIndicator size={theme.icons.sm} color={theme.colors.white} /> :
+                                <ActivityIndicator size={theme.icons.sm} color={theme.colors.text} /> :
                                 'Criar'}
                         </S.CreateClassroomButtonText>
 

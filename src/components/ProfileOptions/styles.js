@@ -27,6 +27,6 @@ export const OptTextContainer = styled.View`
         flex: 1;
 `
 export const OptText = styled.Text`
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.font.sm}px;
 `

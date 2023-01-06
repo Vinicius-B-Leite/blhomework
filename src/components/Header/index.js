@@ -23,7 +23,7 @@ export default function Header({ goBackButton }) {
                 {
                     goBackButton && (
                         <TouchableOpacity onPress={() => navigation.goBack()} >
-                            <MaterialIcons name='logout' size={theme.icons.sm} color={theme.colors.white} />
+                            <MaterialIcons name='logout' size={theme.icons.sm} color={theme.colors.text} />
                         </TouchableOpacity>
                     )
                 }

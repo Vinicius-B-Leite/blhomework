@@ -17,7 +17,7 @@ export const Main = styled.View`
         align-items: center;
 `
 export const Title = styled.Text`
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
         font-size: ${({theme}) => theme.font.md}px;
         margin-top: 13%;
 `
@@ -40,5 +40,5 @@ export const Btn = styled.TouchableOpacity`
 `
 export const TextBtn = styled.Text`
         font-size: ${({theme}) => theme.font.sm}px;
-        color: ${({theme}) => theme.colors.white};
+        color: ${({theme}) => theme.colors.text};
 `

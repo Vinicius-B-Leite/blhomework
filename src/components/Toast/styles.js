@@ -12,7 +12,7 @@ export const Container = styled.View`
 `;
 
 export const Message = styled.Text`
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.font.sm}px;
         font-weight: bold;
 `;

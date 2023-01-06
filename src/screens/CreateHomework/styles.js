@@ -14,7 +14,7 @@ export const Header = styled.View`
         justify-Content: space-between;
         `
 export const BtnGoBack = styled.Text`
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         font-Size:${({ theme }) => theme.font.md}px ;
         `
 export const BtnPost = styled.Text`
@@ -34,7 +34,7 @@ export const Inp = styled.TextInput`
         align-Items: center;
         border-Radius: ${({ theme }) => theme.borderRadius.sm}px;
         font-size:${({ theme }) => theme.font.sm}px ;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         margin: 2% 0 ;
 `
 
@@ -48,7 +48,7 @@ export const SelectSubject = styled.TouchableOpacity`
         border-Radius: ${({ theme }) => theme.borderRadius.sm}px;
         justify-Content: space-between;
         font-Size:${({ theme }) => theme.font.sm}px ;
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.text};
         margin: 2% 0 ;
 `
 export const InactiveOrActiveText = styled.Text`

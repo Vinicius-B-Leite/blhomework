@@ -11,7 +11,7 @@ export const Header = styled.TouchableOpacity`
 
 export const HeaderTitle = styled.Text`
         font-size: ${({ theme }) => theme.font.md}px;
-        color: ${({ theme }) => theme.colors.white} ;
+        color: ${({ theme }) => theme.colors.text} ;
 `
 export const Main = styled.View`
         padding: 5%;
@@ -27,7 +27,7 @@ export const InputContainer = styled.View`
 
 export const Inp = styled.TextInput`
         margin-left: 5%;
-        color: ${({ theme }) => theme.colors.white} ; 
+        color: ${({ theme }) => theme.colors.text} ; 
         font-size: ${({ theme }) => theme.font.sm}px;
         flex: 1;
 `

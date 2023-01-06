@@ -9,10 +9,10 @@ export const Main = styled.View`
 `
 export const Task = styled.Text`
         font-size: ${({ theme }) => theme.font.xmd}px; 
-        color: ${({ theme }) => theme.colors.white};`
+        color: ${({ theme }) => theme.colors.text};`
 
 export const ClassroomName = styled.Text`
-        color: ${({ theme }) => theme.colors.white}; 
+        color: ${({ theme }) => theme.colors.text}; 
         font-size: ${({ theme }) =>  theme.font.sm}px;`
 
 export const NoHomeworks = styled.Text`

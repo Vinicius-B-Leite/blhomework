@@ -140,7 +140,6 @@ export default function ChatContextProvider({ children }) {
             createAt: firestore.FieldValue.serverTimestamp(),
             message: message || '',
             owner: user.uid,
-            system: false,
             imageURL: ''
         }
 

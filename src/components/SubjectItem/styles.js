@@ -9,6 +9,6 @@ export const Container = styled.TouchableOpacity`
 `
 export const SubjectName = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
-        color: ${({ theme, color }) => color || theme.colors.white};
+        color: ${({ theme, color }) => color || theme.colors.text};
         font-weight: bold;
 `

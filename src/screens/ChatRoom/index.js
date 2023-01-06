@@ -17,7 +17,6 @@ export default function ChatRoom({ route, navigation }) {
     const { getMessages, messages, sendMessage } = useContext(ChatContext)
 
     const [message, setMessage] = useState('')
-    const [imageUri, setImageUri] = useState()
 
     const tabBar = navigation.getParent()
 
@@ -38,7 +37,7 @@ export default function ChatRoom({ route, navigation }) {
     return (
         <S.Container>
             <S.Header onPress={() =>  navigation.goBack()}>
-                <AntDesign name='arrowleft' size={theme.icons.sm} color={theme.colors.white} />
+                <AntDesign name='arrowleft' size={theme.icons.sm} color={theme.colors.text} />
                 <S.Avatar
                     source={{ uri: avatarURL }}
                 />
@@ -72,12 +71,11 @@ export default function ChatRoom({ route, navigation }) {
                 <S.ButtonImage
 
                     onPress={() => pickDocument({
-                        setState: setImageUri,
                         type: 'image/*',
                         onSucess: (data) => sendMessage({ image: data[0], classroomId: id })
                     })}
                 >
-                    <Feather name='image' size={theme.icons.sm} color={theme.colors.white} />
+                    <Feather name='image' size={theme.icons.sm} color={theme.colors.text} />
                 </S.ButtonImage>
 
                 <S.ButtonSendMessage

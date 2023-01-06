@@ -31,7 +31,7 @@ export const PickDocument = styled.TouchableOpacity`
         justify-content: center;
         align-items: center;
         border-width: 1px;
-        border-color: ${({theme}) => theme.colors.white};
+        border-color: ${({theme}) => theme.colors.text};
         margin-top: 10%;
 `
 export const Inp = styled.TextInput`
@@ -70,6 +70,6 @@ export const CreateClassroomButton = styled.TouchableOpacity `
         border-radius: ${({theme}) =>  theme.borderRadius.sm}px;
 `
 export const CreateClassroomButtonText = styled.Text `
-        color: ${({theme}) =>  theme.colors.white};
+        color: ${({theme}) =>  theme.colors.text};
         font-size: ${({theme}) => theme.font.sm}px;
 `;
