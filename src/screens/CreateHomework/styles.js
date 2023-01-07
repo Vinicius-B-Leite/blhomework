@@ -81,6 +81,20 @@ export const CloseBottomSheet = styled.TouchableOpacity`
         height: 100%;
         width: 100%;
         background-color: ${({ theme }) => theme.colors.backgrounbColorSecundary};
+        `
+
+export const CompleteButton = styled.TouchableOpacity`
+        flex-direction: row;
+        border-radius: ${({theme}) => theme.borderRadius.full}px;
+        width: 20%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+`
+
+
+export const FilesList = styled(BottomSheetFlatList)`
+        padding: 5%;
 `
 export const ModalBottomSheet = styled(BottomSheet).attrs(({ theme }) => ({
         handleStyle: {
@@ -95,14 +109,6 @@ export const ModalBottomSheet = styled(BottomSheet).attrs(({ theme }) => ({
                 backgroundColor: theme.colors.white, width: '50%'
         },
         backgroundStyle: {
-                backgroundColor: theme.colors.blackBackgroundColor
+                backgroundColor: theme.colors.blackBackgroundColor,
         }
 }))``
-
-
-export const FilesList = styled(BottomSheetFlatList).attrs({
-
-})`
-        padding: 5%;
-
-`

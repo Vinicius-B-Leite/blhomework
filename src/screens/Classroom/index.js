@@ -53,7 +53,7 @@ export default function Classroom({ route }) {
                     <FlatList
                         contentContainerStyle={{ padding: '5%' }}
                         data={homeworks}
-                        renderItem={({ item }) => <HomeworkItem item={item} />}
+                        renderItem={({ item }) => <HomeworkItem item={item}/>}
                     />
                 ) :
                     !loading && (<S.NoHomeworks>Não há tarefas de casa</S.NoHomeworks>)

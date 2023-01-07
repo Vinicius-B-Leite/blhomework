@@ -24,3 +24,11 @@ export const UserName = styled.Text`
         font-size: ${({ theme }) => theme.font.sm}px;
         margin-left: 10%;
 `;
+
+export const GoBackButton = styled.TouchableOpacity`
+        width: 15%;
+        height: 100%;
+        border-radius: ${({theme}) => theme.borderRadius.full}px;
+        justify-content: center;
+        align-items: center;
+`

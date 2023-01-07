@@ -55,25 +55,26 @@ export default function CreateHomework({ navigation, route }) {
         tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
         navigation.goBack()
     }
-    
+
 
 
     return (
-        <KeyboardAvoidingView enabled={false} behavior={Platform.OS == 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+        <KeyboardAvoidingView enabled={false} behavior='height' style={{ flex: 1, backgroundColor: 'green' }}>
             <S.Container >
                 <S.Header >
                     <TouchableOpacity onPress={handleGoBack}>
                         <S.BtnGoBack > {'<'}   Criar Tarefa</S.BtnGoBack>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => createHomework({ title, description, classroomID: route.params.id, callback: clearInputes })}>
+                    <S.CompleteButton onPress={() => createHomework({ title, description, classroomID: route.params.id, callback: clearInputes })}>
                         <S.BtnPost>concluir</S.BtnPost>
-                    </TouchableOpacity>
+                    </S.CompleteButton>
                 </S.Header>
 
                 <Divisor />
 
                 <S.Main>
+
                     <S.SelectSubject onPress={() => setModalSubjectsVisible(true)}>
                         <S.InactiveOrActiveText active={!!subjectSelected} color={subjectSelected?.color}>{subjectSelected ? subjectSelected.name : 'Disciplina'}</S.InactiveOrActiveText>
                         <AntDesign name='down' size={theme.icons.sm} color={theme.colors.text} />
@@ -86,16 +87,19 @@ export default function CreateHomework({ navigation, route }) {
                         onChangeText={setTitle}
                     />
 
+                    <KeyboardAvoidingView enabled={true} behavior='height' style={{ height: Dimensions.get('screen').height / 2 }} keyboardVerticalOffset={100}>
 
-                    <S.Inp
-                        placeholderTextColor={theme.colors.grey}
-                        textAlignVertical='top'
-                        multiline
-                        placeholder='Descrição'
-                        value={description}
-                        onChangeText={setDescription}
-                        height='50%'
-                    />
+
+                        <S.Inp
+                            placeholderTextColor={theme.colors.grey}
+                            textAlignVertical='top'
+                            multiline
+                            placeholder='Descrição'
+                            value={description}
+                            onChangeText={setDescription}
+                            height='100%'
+                        />
+                    </KeyboardAvoidingView>
 
                     <S.UploadAndDateContainer>
                         <View>
@@ -107,7 +111,7 @@ export default function CreateHomework({ navigation, route }) {
 
                         <S.CalendarContainer onPress={() => setCalendarOpen(true)} >
                             <AntDesign name='calendar' size={theme.icons.sm} color={theme.colors.text} style={{ marginRight: '3%' }} />
-                            <Text>{dateSelected.getDate()}/{dateSelected.getMonth() + 1}</Text>
+                            <Text>{dateSelected.toLocaleDateString({year: "numeric",month: "2-digit",day: "2-digit",})}</Text>
                         </S.CalendarContainer>
                     </S.UploadAndDateContainer>
 
@@ -115,7 +119,7 @@ export default function CreateHomework({ navigation, route }) {
 
 
 
-            </S.Container>
+            </S.Container >
 
 
             <ModalSubjects visible={modalSubjectsVisible} onClose={() => setModalSubjectsVisible(false)} />

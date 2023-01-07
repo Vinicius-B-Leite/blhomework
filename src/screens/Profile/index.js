@@ -18,9 +18,6 @@ export default function Profile() {
     const theme = useTheme()
     const { user, logout, changeUserPhoto, changeUserName, changeEmail, changePassword } = useContext(AuthContext)
     const [photo, setPhoto] = useState(user.photoURL)
-    console.log(1-4);
-
-    photo
 
     const [modalVisible, setModalVisible] = useState(false)
     const [modalProps, setModalProps] = useState({})

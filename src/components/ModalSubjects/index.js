@@ -74,7 +74,7 @@ export default function ModalSubjects({ visible, onClose }) {
             <S.Container >
 
                 <S.Header >
-                    <S.IconsGoback>
+                    <S.IconsGoback onPress={onClose}>
                         <Ionicons name='chevron-back' size={theme.icons.lg} color={theme.colors.text} />
                     </S.IconsGoback>
                     <S.Search >

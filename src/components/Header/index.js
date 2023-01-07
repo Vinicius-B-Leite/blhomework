@@ -22,9 +22,9 @@ export default function Header({ goBackButton }) {
 
                 {
                     goBackButton && (
-                        <TouchableOpacity onPress={() => navigation.goBack()} >
+                        <S.GoBackButton onPress={() => navigation.goBack()} >
                             <MaterialIcons name='logout' size={theme.icons.sm} color={theme.colors.text} />
-                        </TouchableOpacity>
+                        </S.GoBackButton>
                     )
                 }
             </S.Container>

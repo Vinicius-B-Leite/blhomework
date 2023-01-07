@@ -11,8 +11,8 @@ import ViewFileItem from '../../components/ViewFileItem';
 
 export default function Homework({ route, navigation }) {
     const theme = useTheme()
-    const { subject, title, deadline, description, filesRefs } = route.params.data
-    const { getHomeworkFiles, loading } = useContext(HomeworkContext)
+    const { subject, title, deadline, description, filesRefs, id: homeworkId, classroomID } = route.params.data
+    const { getHomeworkFiles, loading, setHomeworkDoneStatus } = useContext(HomeworkContext)
 
     const [files, setFiles] = useState([])
 
@@ -20,7 +20,6 @@ export default function Homework({ route, navigation }) {
 
         filesRefs.forEach(file => {
             getHomeworkFiles(file, (url) => setFiles(old => [...old, url]))
-
         })
     }, [])
 
@@ -31,7 +30,7 @@ export default function Homework({ route, navigation }) {
                     <S.TextGoBack numberOfLines={1}>{'<  '} {subject.name}</S.TextGoBack>
                 </TouchableOpacity>
 
-                <S.SucessButon >
+                <S.SucessButon onPress={() => setHomeworkDoneStatus(homeworkId, classroomID, 'done')}>
                     <Text>concluir</Text>
                 </S.SucessButon>
             </S.Header>
@@ -40,7 +39,10 @@ export default function Homework({ route, navigation }) {
 
             <S.Main>
                 <S.Title>{title}</S.Title>
-                <S.SimpleText>Data de entrega: {deadline.toDate().getDate()}/{deadline.toDate().getMonth() + 1}</S.SimpleText>
+                <S.SimpleText>Data de entrega: {deadline.toDate().toLocaleDateString({
+                    month: '2-digit',
+                    day: '2-digit',
+                })}</S.SimpleText>
 
                 <S.Desciption showsVerticalScrollIndicator={false} >
                     <S.SimpleText>{description}</S.SimpleText>
