@@ -26,7 +26,7 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
             return
         }
         createClassRoom({
-            photo: classRoomPhoto[0].fileCopyUri,
+            photo: classRoomPhoto[0].fileCopyUri || 'https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png',
             name: classroomName,
             callback: async () => {
                 setToastSettings({ visible: true, text: 'Sala criada', bg: theme.colors.green, duration: 500 })
