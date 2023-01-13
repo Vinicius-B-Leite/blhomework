@@ -45,7 +45,7 @@ export default function Login() {
             {
                 type === 'singup' && (
                     <S.InputContainer error={error?.userName}>
-                        <FontAwesome5 name='user' size={theme.icons.sm} colors={theme.colors.text} />
+                        <FontAwesome5 name='user' size={theme.icons.sm} color={theme.colors.text} />
                         <S.Input
                             value={name}
                             onChangeText={setName}
@@ -57,7 +57,7 @@ export default function Login() {
             }
 
             <S.InputContainer error={error?.email}>
-                <MaterialCommunityIcons name='email' size={theme.icons.sm} colors={theme.colors.text} />
+                <MaterialCommunityIcons name='email' size={theme.icons.sm} color={theme.colors.text} />
                 <S.Input
                     value={email}
                     onChangeText={setEmail}
@@ -69,7 +69,7 @@ export default function Login() {
             </S.InputContainer>
 
             <S.InputContainer error={error.password}>
-                <FontAwesome name='lock' size={theme.icons.sm} colors={theme.colors.text} />
+                <FontAwesome name='lock' size={theme.icons.sm} color={theme.colors.text} />
                 <S.Input
                     value={password}
                     onChangeText={setPassword}
@@ -79,10 +79,10 @@ export default function Login() {
                 />
                 <S.BtnShowPassword onPress={() => setShowPassword(!showPassword)}>
                     {showPassword ? (
-                        <Entypo name='eye' size={theme.icons.sm} colors={theme.colors.text} />
+                        <Entypo name='eye' size={theme.icons.sm} color={theme.colors.text} />
                     ) :
                         (
-                            <Entypo name='eye-with-line' size={theme.icons.sm} colors={theme.colors.text} />
+                            <Entypo name='eye-with-line' size={theme.icons.sm} color={theme.colors.text} />
                         )}
 
 
@@ -106,7 +106,7 @@ export default function Login() {
                 setError({})
                 setType(type === 'login' ? 'singup' : 'login')
             }}>
-                <Text>{type === 'login' ? 'Não possui uma conta? Crie já!' : 'Já possui uma conta? Faça login!'}</Text>
+                <Text style={{color: theme.colors.text}}>{type === 'login' ? 'Não possui uma conta? Crie já!' : 'Já possui uma conta? Faça login!'}</Text>
             </TouchableOpacity>
 
         </S.Container>
