@@ -21,7 +21,7 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
     const [toastSettings, setToastSettings] = useState({ visible: false, text: '', bg: '', duration: 500 })
 
     function handleCreateRoom() {
-        if (classRoomPhoto === '' && classroomName === '') {
+        if (classRoomPhoto === '' || classroomName === '') {
             setToastSettings({ visible: true, text: 'Preencha todos os campos', bg: theme.colors.red, duration: 1000 })
             return
         }

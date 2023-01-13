@@ -23,5 +23,6 @@ export const EnterClassroomIcon = styled.Text`
         font-weight: bold;
         border-radius: ${({ theme }) => theme.borderRadius.full}px;
         font-size: ${({ theme }) => theme.font.md}px;
+        z-index: 3;
 `
 

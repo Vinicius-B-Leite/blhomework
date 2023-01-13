@@ -42,6 +42,7 @@ export const Inp = styled.TextInput`
         border-radius: ${({theme}) => theme.borderRadius.sm}px;
         padding: 0 5%;
         font-size: ${({theme}) => theme.font.sm}px;
+        color: ${({theme}) => theme.colors.text};
 `
 export const CodeContainer = styled.View`
         width: 80%;
