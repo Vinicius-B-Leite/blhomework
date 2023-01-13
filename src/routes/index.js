@@ -14,7 +14,7 @@ export default function Routes() {
     const theme = useTheme()
     return (
         <NavigationContainer>
-            <StatusBar backgroundColor={theme.colors.backgrounbColor} barStyle='light-content' />
+            <StatusBar backgroundColor={theme.colors.backgrounbColor} barStyle={theme.colors.backgrounbColor === '#fff' ? 'dark-content' : 'light-content'} />
 
             {
                 !!user ? <AppRoutes /> : <LoginRoutes />

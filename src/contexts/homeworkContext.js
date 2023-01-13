@@ -12,7 +12,6 @@ export const HomeworkContext = createContext()
 
 export default function HomeworkProvider({ children }) {
 
-    const { user } = useContext(AuthContext)
     const { getTokensOfStudents, sendNotification } = useContext(NotifcationContext)
 
     const [filesOnUploading, setFilesOnUploading] = useState([])

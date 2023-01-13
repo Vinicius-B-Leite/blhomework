@@ -18,14 +18,17 @@ export default function ThemeContextProvider({ children }) {
 
     useEffect(() => {
         getAsyncStorageTheme()
+
     }, [])
+
     async function getAsyncStorageTheme() {
         const cacheTheme = await AsyncStorage.getItem('_theme')
 
-        if (JSON.parse(cacheTheme) === 'light') {
+        if (cacheTheme === 'light') {
             setTheme(old => ({ ...old, colors: { ...lightColors } }))
         }
     }
+
     function changeTheme(theme) {
         if (theme === 'dark') {
             setTheme(oldTheme => ({ ...oldTheme, colors: { ...darkColors } }))

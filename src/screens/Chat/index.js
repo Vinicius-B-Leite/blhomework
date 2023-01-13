@@ -45,6 +45,7 @@ export default function Chat({ navigation }) {
                         value={searchInput}
                         onChangeText={handleFilter}
                         placeholder='Procurar chat'
+                        placeholderTextColor={theme.colors.text}
                     />
                 </S.InputContainer>
 

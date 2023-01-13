@@ -23,6 +23,7 @@ export default function Profile() {
     const [modalProps, setModalProps] = useState({})
 
     const [themePickerVisible, setThemePickerVisible] = useState(false)
+    
     function openModal(callback, placeholder, title) {
         setModalProps({ callback, placeholder, title })
         setModalVisible(true)

@@ -105,13 +105,13 @@ export default function CreateHomework({ navigation, route }) {
                         <View>
                             <S.UploadIcon onPress={openBottomSheet}>
                                 <AntDesign name='clouduploado' size={theme.icons.md} color={theme.colors.text} style={{ marginRight: '2%' }} />
-                                <Text>Material de apoio</Text>
+                                <Text style={{color: theme.colors.text}}>Material de apoio</Text>
                             </S.UploadIcon>
                         </View>
 
                         <S.CalendarContainer onPress={() => setCalendarOpen(true)} >
                             <AntDesign name='calendar' size={theme.icons.sm} color={theme.colors.text} style={{ marginRight: '3%' }} />
-                            <Text>{dateSelected.toLocaleDateString({year: "numeric",month: "2-digit",day: "2-digit",})}</Text>
+                            <Text style={{color: theme.colors.text}}>{dateSelected.toLocaleDateString({year: "numeric",month: "2-digit",day: "2-digit",})}</Text>
                         </S.CalendarContainer>
                     </S.UploadAndDateContainer>
 

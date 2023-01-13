@@ -39,12 +39,16 @@ export default function NotificationProvider({ children }) {
     }
 
     async function getTokensOfStudents(classroomID) {
-        const { students } = (await firestore().collection('classroom').doc(classroomID).get()).data()
+
+        const [DocumentSnapshot, currentToken] = await Promise.all([
+            firestore().collection('classroom').doc(classroomID).get(),
+            AsyncStorage.getItem('_token')
+        ])
         const tokens = []
 
-        for (const student of students) {
+        for (const student of DocumentSnapshot.data().students) {
             const { tokenFCM } = (await firestore().collection('users').doc(student).get()).data()
-            tokenFCM !== user.tokenFCM && tokens.push(tokenFCM)
+            tokenFCM !== currentToken && tokens.push(tokenFCM)
         }
 
         return tokens
