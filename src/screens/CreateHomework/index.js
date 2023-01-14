@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Divisor from '../../components/Divisor'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -42,6 +42,14 @@ export default function CreateHomework({ navigation, route }) {
     }
     useLayoutEffect(() => {
         tabBar.setOptions({ tabBarStyle: { display: 'none' } })
+    }, [])
+
+    useEffect(() => {
+        navigation.addListener('beforeRemove', () => {
+            Keyboard.dismiss()
+
+            tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
+        })
 
     }, [])
 
@@ -50,19 +58,13 @@ export default function CreateHomework({ navigation, route }) {
         setTitle('')
     }
 
-    function handleGoBack() {
-        Keyboard.dismiss()
-        tabBar.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: theme.colors.blackBackgroundColor, borderTopWidth: 0 } })
-        navigation.goBack()
-    }
-
 
 
     return (
         <KeyboardAvoidingView enabled={false} behavior='height' style={{ flex: 1, backgroundColor: 'green' }}>
             <S.Container >
                 <S.Header >
-                    <TouchableOpacity onPress={handleGoBack}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
                         <S.BtnGoBack > {'<'}   Criar Tarefa</S.BtnGoBack>
                     </TouchableOpacity>
 
@@ -105,13 +107,13 @@ export default function CreateHomework({ navigation, route }) {
                         <View>
                             <S.UploadIcon onPress={openBottomSheet}>
                                 <AntDesign name='clouduploado' size={theme.icons.md} color={theme.colors.text} style={{ marginRight: '2%' }} />
-                                <Text style={{color: theme.colors.text}}>Material de apoio</Text>
+                                <Text style={{ color: theme.colors.text }}>Material de apoio</Text>
                             </S.UploadIcon>
                         </View>
 
                         <S.CalendarContainer onPress={() => setCalendarOpen(true)} >
                             <AntDesign name='calendar' size={theme.icons.sm} color={theme.colors.text} style={{ marginRight: '3%' }} />
-                            <Text style={{color: theme.colors.text}}>{dateSelected.toLocaleDateString({year: "numeric",month: "2-digit",day: "2-digit",})}</Text>
+                            <Text style={{ color: theme.colors.text }}>{dateSelected.toLocaleDateString({ year: "numeric", month: "2-digit", day: "2-digit", })}</Text>
                         </S.CalendarContainer>
                     </S.UploadAndDateContainer>
 

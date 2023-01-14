@@ -27,3 +27,21 @@ export const Input = styled.TextInput`
         margin-right: 5%;
         font-size: ${({ theme }) => theme.font.sm}px;
 `
+
+export const Text = styled.Text`
+        color: ${({ theme }) => theme.colors.text};
+        font-size: ${({ theme }) => theme.font.sm}px;
+        font-weight: bold;
+`
+
+export const CreateSubject = styled.TouchableOpacity`
+        background-color: ${({ theme }) => theme.colors.blackBackgroundColor};
+        padding: 5%;
+        border-radius: ${({ theme }) => theme.borderRadius.sm}px;
+        margin:  3% 0;
+`
+
+export const CreateSubjectText = styled.Text`
+        font-size: ${({ theme }) => theme.font.sm}px;
+        color: ${({ theme }) => theme.colors.text};
+`

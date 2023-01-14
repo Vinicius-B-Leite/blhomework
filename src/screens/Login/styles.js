@@ -38,6 +38,7 @@ export const InputContainer = styled.View`
 export const Input = styled.TextInput`
         flex: 1;
         margin-left: 5%;
+        color: ${({theme}) => theme.colors.text};
 `
 export const BtnShowPassword = styled.TouchableOpacity`
         flex-direction: row;

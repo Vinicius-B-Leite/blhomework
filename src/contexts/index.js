@@ -4,6 +4,7 @@ import ChatContextProvider from './chatContext';
 import ClassrommProvider from './classroomContext';
 import HomeworkProvider from './homeworkContext';
 import NotificationProvider from './notificationContext';
+import SubjectProvider from './subjectContext';
 import ThemeContextProvider from './themeContext';
 
 export default function Contexts({ children }) {
@@ -14,7 +15,9 @@ export default function Contexts({ children }) {
                     <NotificationProvider>
                         <HomeworkProvider>
                             <ChatContextProvider>
-                                {children}
+                                <SubjectProvider>
+                                    {children}
+                                </SubjectProvider>
                             </ChatContextProvider>
                         </HomeworkProvider>
                     </NotificationProvider>
