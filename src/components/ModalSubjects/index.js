@@ -13,11 +13,13 @@ export default function ModalSubjects({ visible, onClose }) {
     const theme = useTheme()
     const [search, setSearch] = useState()
     const [modalCreateSubjectVisible, setModalCreateSubjectVisible] = useState(false)
-    const [filteredList, setFilteredList] = useState([])
+    const [filteredList, setFilteredList] = useState()
     const { subjects } = useContext(SubjectContext)
 
     useMemo(() => {
-        setFilteredList(subjects?.filter(sub => sub?.name?.toLowerCase().includes(search?.toLowerCase())))
+        const mySubjectsFiltered = subjects?.mySubjects?.filter(sub => sub?.name?.toLowerCase().includes(search?.toLowerCase()))
+        const comunsSubjectFiltered = subjects?.comuns?.filter(sub => sub?.name?.toLowerCase().includes(search?.toLowerCase()))
+        setFilteredList({ comuns: [...comunsSubjectFiltered], mySubjects: [...mySubjectsFiltered] })
 
     }, [search])
 
@@ -26,7 +28,7 @@ export default function ModalSubjects({ visible, onClose }) {
             <S.Container >
                 <S.Header >
                     <S.IconsGoback onPress={onClose}>
-                        <Ionicons name='chevron-back' size={theme.icons.lg} color={theme.colors.text} />
+                        <Ionicons name='chevron-back' size={theme.icons.md} color={theme.colors.text} />
                     </S.IconsGoback>
                     <S.Search >
                         <S.Input
@@ -42,21 +44,28 @@ export default function ModalSubjects({ visible, onClose }) {
 
                 <View style={{ padding: '5%' }}>
                     <S.Text>Minhas disciplinas</S.Text>
-                    <S.CreateSubject onPress={() => setModalCreateSubjectVisible(true)}>
-                        <S.CreateSubjectText>Criar disciplina  {'->'}</S.CreateSubjectText>
-                    </S.CreateSubject>
+
+                    <FlatList
+                        style={{ height: '30%' }}
+                        ListHeaderComponent={<S.CreateSubject onPress={() => setModalCreateSubjectVisible(true)}>
+                                                 <S.CreateSubjectText>Criar disciplina  {'->'}</S.CreateSubjectText>
+                                             </S.CreateSubject>}
+                        showsVerticalScrollIndicator={false}
+                        data={search?.length > 0 ? filteredList.mySubjects : subjects.mySubjects}
+                        renderItem={({ item }) => <SubjectItem item={item} onClose={onClose} />}
+                    />
                 </View>
 
+                <S.Text ml='5%'>Disciplinas comuns</S.Text>
                 <FlatList
-                    ListHeaderComponent={<S.Text>Disciplinas comuns</S.Text>}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ paddingHorizontal: '5%' }}
-                    data={search?.length > 0 ? filteredList : subjects}
+                    data={search?.length > 0 ? filteredList.comuns : subjects.comuns}
                     renderItem={({ item }) => <SubjectItem item={item} onClose={onClose} />}
                 />
             </S.Container>
 
-            <ModalCreateSubject visible={modalCreateSubjectVisible} onRequestClose={() => setModalCreateSubjectVisible(false)}/>
+            <ModalCreateSubject visible={modalCreateSubjectVisible} onRequestClose={() => setModalCreateSubjectVisible(false)} />
         </Modal>
     );
 }

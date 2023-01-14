@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Modal, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { ActivityIndicator, KeyboardAvoidingView, Modal, StyleSheet, Text, View } from 'react-native';
 import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider, } from 'reanimated-color-picker';
 import * as S from './styles'
 import Divisor from '../Divisor'
 import { useTheme } from 'styled-components';
+import { SubjectContext } from '../../contexts/subjectContext';
 
 
 
@@ -14,6 +15,7 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
     const [initials, setInitials] = useState('')
     const [subjectName, setSubjectName] = useState('')
     const theme = useTheme()
+    const { setNewSubject, loading } = useContext(SubjectContext)
 
     function onSelectColor({ hex }) {
         setColor(hex)
@@ -32,7 +34,7 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
 
     return (
         <Modal visible={visible} onRequestClose={onRequestClose} animationType='fade'>
-            <KeyboardAvoidingView style={{flex: 1}} behavior='height' enabled={false}>
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior='height' enabled={false}>
                 <S.Container>
                     <S.Header>
                         <S.CloseModal onPress={onRequestClose}>
@@ -49,19 +51,19 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
                         thumbSize={20}
 
                         onComplete={onSelectColor}
-                        >
+                    >
 
-                        <S.PickerSlide  />
+                        <S.PickerSlide />
 
                         <S.Row>
                             <S.PreviewColor hideInitialColor hideText />
 
                             <View style={{ flex: 1 }}>
                                 <HueSlider thumbShape="doubleTriangle" thumbColor={theme.colors.backgrounbColor} />
-                                <S.InputColor 
-                                    placeholder='Informe uma cor' 
+                                <S.InputColor
+                                    placeholder='Informe uma cor'
                                     placeholderTextColor={theme.colors.grey}
-                                    value={inputColor} onChangeText={setInputColor} 
+                                    value={inputColor} onChangeText={setInputColor}
                                     onEndEditing={changeColor} />
                             </View>
                         </S.Row>
@@ -74,7 +76,7 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
                             color={color}
                             value={initials}
                             onChangeText={setInitials}
-                            maxLength={4}
+                            maxLength={3}
                             placeholderTextColor={theme.colors.grey}
                         />
                         <S.SubjectNameInput
@@ -94,8 +96,8 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
                         </View>
                     </S.Card>
 
-                    <S.CreateButton>
-                        <S.CreateButtonText>Criar</S.CreateButtonText>
+                    <S.CreateButton onPress={() => setNewSubject({name: subjectName, init: initials, color:color})}>
+                        <S.CreateButtonText>{loading ? <ActivityIndicator  size={theme.icons.sm} color={theme.colors.backgrounbColor} /> : 'Criar'}</S.CreateButtonText>
                     </S.CreateButton>
                 </S.Container>
             </KeyboardAvoidingView>

@@ -7,7 +7,7 @@ export const Container = styled.View`
 export const Header = styled.View`
         flex-direction: row;
         align-items: center;
-        padding: 5%;
+        padding: 3% 5%;
 `
 export const IconsGoback = styled.TouchableOpacity`
         margin-right: 5%;
@@ -16,10 +16,10 @@ export const Search = styled.View`
         flex-direction: row;
         align-items: center;
         background-color: ${({ theme }) => theme.colors.blackBackgroundColor};
-        flex: 1;
         justify-content: flex-end;
         border-radius: ${({ theme }) => theme.borderRadius.full}px;
-        padding: 0 5%;
+        padding: 0% 5%;
+        width: 90%;
 `
 export const Input = styled.TextInput`
         flex: 1;
@@ -32,6 +32,8 @@ export const Text = styled.Text`
         color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.font.sm}px;
         font-weight: bold;
+        margin-left: ${({ml}) => ml || 0};
+        line-height: ${({ theme }) => theme.font.lg}px;
 `
 
 export const CreateSubject = styled.TouchableOpacity`
