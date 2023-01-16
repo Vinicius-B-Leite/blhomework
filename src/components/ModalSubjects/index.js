@@ -19,7 +19,13 @@ export default function ModalSubjects({ visible, onClose }) {
     useMemo(() => {
         const mySubjectsFiltered = subjects?.mySubjects?.filter(sub => sub?.name?.toLowerCase().includes(search?.toLowerCase()))
         const comunsSubjectFiltered = subjects?.comuns?.filter(sub => sub?.name?.toLowerCase().includes(search?.toLowerCase()))
-        setFilteredList({ comuns: [...comunsSubjectFiltered], mySubjects: [...mySubjectsFiltered] })
+
+        let filteredArray = {}
+
+        if (comunsSubjectFiltered) filteredArray.comuns = [...comunsSubjectFiltered]
+        if (mySubjectsFiltered) filteredArray.mySubjects = [...mySubjectsFiltered]
+
+        setFilteredList(filteredArray)
 
     }, [search])
 
@@ -44,14 +50,13 @@ export default function ModalSubjects({ visible, onClose }) {
 
                 <View style={{ padding: '5%' }}>
                     <S.Text>Minhas disciplinas</S.Text>
-
+                    <S.CreateSubject onPress={() => setModalCreateSubjectVisible(true)}>
+                        <S.CreateSubjectText>Criar disciplina  {'->'}</S.CreateSubjectText>
+                    </S.CreateSubject>
                     <FlatList
-                        style={{ height: '30%' }}
-                        ListHeaderComponent={<S.CreateSubject onPress={() => setModalCreateSubjectVisible(true)}>
-                                                 <S.CreateSubjectText>Criar disciplina  {'->'}</S.CreateSubjectText>
-                                             </S.CreateSubject>}
+                        style={{ maxHeight: '30%' }}
                         showsVerticalScrollIndicator={false}
-                        data={search?.length > 0 ? filteredList.mySubjects : subjects.mySubjects}
+                        data={search?.length > 0 ? filteredList.mySubjects : subjects?.mySubjects}
                         renderItem={({ item }) => <SubjectItem item={item} onClose={onClose} />}
                     />
                 </View>
@@ -60,7 +65,7 @@ export default function ModalSubjects({ visible, onClose }) {
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ paddingHorizontal: '5%' }}
-                    data={search?.length > 0 ? filteredList.comuns : subjects.comuns}
+                    data={search?.length > 0 ? filteredList.comuns : subjects?.comuns}
                     renderItem={({ item }) => <SubjectItem item={item} onClose={onClose} />}
                 />
             </S.Container>

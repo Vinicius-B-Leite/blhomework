@@ -32,6 +32,10 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
         }
     }
 
+    function clearinputs(){
+        setInitials('')
+        setSubjectName('')
+    }
     return (
         <Modal visible={visible} onRequestClose={onRequestClose} animationType='fade'>
             <KeyboardAvoidingView style={{ flex: 1 }} behavior='height' enabled={false}>
@@ -96,7 +100,9 @@ export default function ModalCreateSubject({ visible, onRequestClose }) {
                         </View>
                     </S.Card>
 
-                    <S.CreateButton onPress={() => setNewSubject({name: subjectName, init: initials, color:color})}>
+                    <S.CreateButton onPress={() => {
+                        setNewSubject({name: subjectName, init: initials, color:color}).then(clearinputs)
+                    }}>
                         <S.CreateButtonText>{loading ? <ActivityIndicator  size={theme.icons.sm} color={theme.colors.backgrounbColor} /> : 'Criar'}</S.CreateButtonText>
                     </S.CreateButton>
                 </S.Container>
