@@ -15,7 +15,7 @@ export default function HomeworkProvider({ children }) {
     const { getTokensOfStudents, sendNotification } = useContext(NotifcationContext)
 
     const [filesOnUploading, setFilesOnUploading] = useState([])
-
+    const { user } = useContext(AuthContext)
     const [homeworks, setHomeworks] = useState([])
     const [homeworksDone, setHomeworksDone] = useState([])
     const [loading, setLoading] = useState([])
@@ -95,7 +95,7 @@ export default function HomeworkProvider({ children }) {
 
         if (filesOnUploading.length > 0 && isAnyFileUploading > 0) return
 
-        else if (title !== '' && description !== '' && classroomID && subjectSelected ) {
+        else if (title !== '' && description !== '' && classroomID && subjectSelected) {
 
             const classroomRef = firestore().collection('classroom').doc(classroomID)
             const homeworkRef = classroomRef.collection('homeworks').doc(homeworkID)
@@ -108,12 +108,12 @@ export default function HomeworkProvider({ children }) {
                 filesRefs: filesOnUploading.map(file => (file.ref))
             }
 
-            const [tokens, classroomData ] = await Promise.all([
+            const [tokens, classroomData] = await Promise.all([
                 getTokensOfStudents(classroomID),
                 classroomRef.get(),
                 homeworkRef.set(data),
             ])
-            
+
             callback()
             resetAllStates()
 
@@ -130,18 +130,26 @@ export default function HomeworkProvider({ children }) {
         setLoading(true)
 
         let homeworksList = []
-        let data = await firestore()
-            .collection('classroom')
-            .doc(key)
-            .collection('homeworks')
-            .orderBy('deadline', 'asc')
-            .get()
+
+        const [data, classroomResponse] = await Promise.all([
+            firestore()
+                .collection('classroom')
+                .doc(key)
+                .collection('homeworks')
+                .orderBy('deadline', 'asc')
+                .get(),
+            firestore().collection('classroom').doc(key).get()
+        ])
+
+
+        const isAdmin = classroomResponse.data().owner === user.uid 
 
         data?.docs?.forEach((doc) => {
             homeworksList.push({
                 ...doc.data(),
                 id: doc.id,
                 classroomID: key,
+                isAdmin
             })
         })
         await getHomeworksDone(key)
@@ -154,7 +162,7 @@ export default function HomeworkProvider({ children }) {
     async function getHomeworkFiles(ref, callback) {
         setLoading(true)
 
-        const refStorage =storage().ref(ref)
+        const refStorage = storage().ref(ref)
         const [url, metadata] = await Promise.all([refStorage.getDownloadURL(), refStorage.getMetadata()])
 
         const file = {

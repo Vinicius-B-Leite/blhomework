@@ -30,7 +30,7 @@ export default function Homework({ route, navigation }) {
                     <S.TextGoBack numberOfLines={1}>{'<  '} {subject.name}</S.TextGoBack>
                 </TouchableOpacity>
 
-                <S.SucessButon onPress={() => setHomeworkDoneStatus(homeworkId, classroomID, 'done')}>
+                <S.SucessButon onPress={() => setHomeworkDoneStatus(homeworkId, classroomID, 'done').then(() => navigation.goBack())}>
                     <Text>concluir</Text>
                 </S.SucessButon>
             </S.Header>

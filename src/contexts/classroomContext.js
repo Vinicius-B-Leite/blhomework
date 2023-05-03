@@ -43,7 +43,7 @@ export default function ClassrommProvider({ children }) {
                 setClassroomID(newKey)
                 Keyboard.dismiss()
                 if (callback) {
-                    callback(documentReference)
+                    callback(newKey)
                 }
             })
             setLoading(false)

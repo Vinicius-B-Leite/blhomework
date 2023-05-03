@@ -28,11 +28,11 @@ export default function ModalCreateClassroom({ modalVisible, onClose }) {
         createClassRoom({
             photo: classRoomPhoto[0].fileCopyUri || 'https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png',
             name: classroomName,
-            callback: async () => {
+            callback: async (classroomKey) => {
                 setToastSettings({ visible: true, text: 'Sala criada', bg: theme.colors.green, duration: 500 })
                 await Share.share({
-                    message: `Entre em minha sala usando o código ${classroomID}`, 
-                    title: `Entre em minha sala usando o código ${classroomID}`,
+                    message: `Entre em minha sala usando o código ${classroomKey}`, 
+                    title: `Entre em minha sala usando o código ${classroomKey}`,
                     url: 'https://www.youtube.com'})
             }
         })
