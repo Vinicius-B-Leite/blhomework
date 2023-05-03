@@ -13,6 +13,7 @@ export const Container = styled.TouchableOpacity`
 export const Left = styled.View`
         flex-direction: row;
         align-items: center;
+        max-width: 70%;
 `
 
 

@@ -94,7 +94,7 @@ export default function HomeworkItem({ item }) {
                 <S.Left>
                     <S.Initials color={item.subject.color}>{item.subject.init}</S.Initials>
                     <View>
-                        <S.Text >{item.title}</S.Text>
+                        <S.Text numberOfLines={1}>{item.title}</S.Text>
                         <S.Text >{item.deadline.toDate().getDate()}/{item.deadline.toDate().getMonth() + 1}</S.Text>
                     </View>
                 </S.Left>

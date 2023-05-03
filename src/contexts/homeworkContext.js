@@ -99,6 +99,7 @@ export default function HomeworkProvider({ children }) {
 
             const classroomRef = firestore().collection('classroom').doc(classroomID)
             const homeworkRef = classroomRef.collection('homeworks').doc(homeworkID)
+            console.log("🚀 ~ file: homeworkContext.js:102 ~ createHomework ~ homeworkRef:", homeworkRef)
 
             const data = {
                 title,

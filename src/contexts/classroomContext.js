@@ -27,11 +27,9 @@ export default function ClassrommProvider({ children }) {
         if (photo && name != '') {
             setLoading(true)
             const classroomRef = firestore().collection('classroom')
+            const newKey = await classroomRef.doc().id
+            const avatarURL = await sendImageToStorage(newKey, photo)
 
-            const [newKey, avatarURL] = await Promise.all([
-                classroomRef.doc().id,
-                sendImageToStorage(newKey, photo)
-            ])
 
 
             classroomRef.doc(newKey).set({
