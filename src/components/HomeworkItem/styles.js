@@ -5,13 +5,21 @@ export const Container = styled.TouchableOpacity`
         border-radius: ${({theme}) => theme.borderRadius.sm}px;
         flex-direction: row;
         align-items: center;
+        justify-content: space-between;
         padding: 3%  5%;
         background-color: ${({theme}) => theme.colors.blackBackgroundColor};
 `;
+
+export const Left = styled.View`
+        flex-direction: row;
+        align-items: center;
+`
+
+
 export const Initials = styled.Text`
         font-size: ${({theme}) =>theme.font.md}px;
         color: ${({color}) => color};
-        margin-right: 5%;
+        margin-right: 15%;
 `;
 export const Text = styled.Text`
         font-size: ${({theme}) => theme.font.sm}px;

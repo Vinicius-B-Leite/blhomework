@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Dimensions, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Divisor from '../../components/Divisor'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import BSModalUploadFiles from '../../components/BSModalUploadFiles'
@@ -9,20 +9,21 @@ import { HomeworkContext } from '../../contexts/homeworkContext';
 import Calendar from '../../components/Calendar';
 import * as S from './styles'
 import { useTheme } from 'styled-components';
-
+import firestore from '@react-native-firebase/firestore'
 
 
 
 
 
 export default function CreateHomework({ navigation, route }) {
+    console.log("🚀 ~ file: index.js:19 ~ CreateHomework ~ route:", route)
     const theme = useTheme()
-    const { subjectSelected, dateSelected, filesOnUploading, createHomework } = useContext(HomeworkContext)
+    const { subjectSelected, dateSelected, filesOnUploading, createHomework, setSubjectSelected, setDateSelected } = useContext(HomeworkContext)
     const stack = navigation.getParent()
     const tabBar = stack.getParent()
 
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
+    const [title, setTitle] = useState(route?.params?.task?.title || '')
+    const [description, setDescription] = useState(route?.params?.task?.description || '')
 
     const [modalSubjectsVisible, setModalSubjectsVisible] = useState(false)
     const [calendarOpen, setCalendarOpen] = useState(false)
@@ -41,6 +42,10 @@ export default function CreateHomework({ navigation, route }) {
         setSheetPosition(-1)
     }
     useLayoutEffect(() => {
+        if (route.params?.task) {
+            setSubjectSelected(route.params?.task.subject)
+            setDateSelected(route.params?.task.deadline.toDate())
+        }
         tabBar.setOptions({ tabBarStyle: { display: 'none' } })
     }, [])
 
@@ -58,7 +63,19 @@ export default function CreateHomework({ navigation, route }) {
         setTitle('')
     }
 
-
+    const handleUpdateTask = async () => {
+        if (route?.params?.task) {
+            
+            const { task } = route.params
+            await firestore().collection('classroom').doc(task.classroomID).collection('homeworks').doc(task.id).update({
+                title,
+                description,
+                subject: subjectSelected,
+                deadline: dateSelected
+            })
+            navigation.goBack()
+        }
+    }
 
     return (
         <KeyboardAvoidingView enabled={false} behavior='height' style={{ flex: 1, backgroundColor: 'green' }}>
@@ -68,8 +85,8 @@ export default function CreateHomework({ navigation, route }) {
                         <S.BtnGoBack > {'<'}   Criar Tarefa</S.BtnGoBack>
                     </TouchableOpacity>
 
-                    <S.CompleteButton onPress={() => createHomework({ title, description, classroomID: route.params.id, callback: clearInputes })}>
-                        <S.BtnPost>concluir</S.BtnPost>
+                    <S.CompleteButton onPress={() => route.params?.task ? handleUpdateTask() : createHomework({ title, description, classroomID: route.params.id, callback: clearInputes })}>
+                        <S.BtnPost>{route.params?.task ? 'editar' : 'concluir'}</S.BtnPost>
                     </S.CompleteButton>
                 </S.Header>
 
